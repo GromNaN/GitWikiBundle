@@ -9,10 +9,14 @@ Installation
 
 Download source and dependencies:
 
+::
+
     git submodule add git://github.com/GromNaN/GitWikiBundle.git src/Bundle/GromNaN/GitWikiBundle
     git submodule add git://github.com/GromNaN/php-git-repo.git src/Bundle/GromNaN/php-git-repo
 
 Enable the bundle in your application kernel.
+
+::
 
     # app/AppKernel.php
 
@@ -27,6 +31,8 @@ Enable the bundle in your application kernel.
 
 
 Add Git lib in the autoload file:
+
+::
 
     # src/autoload.php - line 21
 
@@ -43,10 +49,14 @@ Configuration
 DI parameters
 -------------
 
+::
+
     # app/config/config.yml
     gitwiki.config: ~
 
 Alternativement, for advanced configuration, the available parameters are:
+
+::
 
     # app/config/config.yml
     gitwiki.config: 
@@ -63,11 +73,15 @@ Git repository
 
 The dir parameter is a full path to a Git repository. You must __init__ it before using the wiki.
 
+::
+
     cd app/wiki
     git init
 
 Routing
 -------
+
+::
 
     # app/config/routing.yml
     wiki:
