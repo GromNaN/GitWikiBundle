@@ -11,21 +11,30 @@ class GitWikiExtension extends Extension
 
     public function configLoad($config, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, __DIR__ . '/../Resources/config');
+        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
         $loader->load('wiki.xml');
         $loader->load('git.xml');
-        
-        if(isset($config['dir'])) {
+        $loader->load('views.xml');
+
+        // Repository
+        if (!empty($config['dir'])) {
             $container->setParameter('gitwiki.repository.dir', $config['dir']);
         }
-        if(isset($config['debug'])) {
+        if (!empty($config['debug'])) {
             $container->setParameter('gitwiki.repository.debug', $config['debug']);
         }
-        if(isset($config['dir'])) {
+        if (!empty($config['dir'])) {
             $container->setParameter('gitwiki.repository.executable', $config['executable']);
         }
+
+        // Views
+        if (!empty($config['views'])) {
+            foreach ($config['views'] as $key => $value) {
+                $container->setParameter('gitwiki.views.'.$key, $value);
+            }
+        }
     }
-    
+
     /**
      * Returns the namespace to be used for this extension (XML namespace).
      *

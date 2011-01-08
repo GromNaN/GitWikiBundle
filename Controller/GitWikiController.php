@@ -14,7 +14,8 @@ class GitWikiController extends Controller
      */
     public function indexAction()
     {
-        return $this->viewAction($this->container->getParameter('gitwiki.page.index'));
+        $name = $this->container->getParameter('gitwiki.page.index');
+        return $this->redirect($this->get('router')->generate('view', array('name' => $name)));
     }
 
     /**
@@ -24,7 +25,11 @@ class GitWikiController extends Controller
     {
         $page = $this->container->get('gitwiki.repository')->getPage($name);
 
-        return $this->render('GromNaN\GitWikiBundle:Default:view.php', array(
+        if ($page->isNew()) {
+            return $this->redirect($this->get('router')->generate('edit', array('name' => $name)));
+        }
+
+        return $this->render($this->getView('view'), array(
             'page' => $page,
         ));
     }
@@ -35,18 +40,19 @@ class GitWikiController extends Controller
     public function editAction($name)
     {
         $page = $this->container->get('gitwiki.repository')->getPage($name);
-        $form = new EditForm('gitwiki', null, $this->get('validator'));
-        $form->setData(new Edition($page));
+        $form = new EditForm('gitwiki', new Edition($page), $this->get('validator'));
 
         if ('POST' === $this->get('request')->getMethod()) {
             $form->bind($this->get('request')->request->get($form->getName()));
-            
+
             if ($form->isValid()) {
                 $page->save($form->getData()->getMessage());
+
+                return $this->redirect($this->get('router')->generate('view', array('name' => $name)));
             }
         }
 
-        return $this->render('GromNaN\GitWikiBundle:Default:edit.php', array(
+        return $this->render($this->getView('edit'), array(
             'page' => $page,
             'form' => $form,
         ));
@@ -59,8 +65,8 @@ class GitWikiController extends Controller
     {
         $page = $this->container->get('gitwiki.repository')->getPage($name);
         $commits = $page->getCommits();
-        
-        return $this->render('GromNaN\GitWikiBundle:Default:history.php', array(
+
+        return $this->render($this->getView('history'), array(
             'page' => $page,
             'commits' => $commits,
         ));
@@ -73,5 +79,15 @@ class GitWikiController extends Controller
     {
         return $this->render('GitWikiBundle:Default:search.php');
     }
-    
+
+    /**
+     * Get the configured view.
+     * 
+     * @param  string  $name The view name
+     * @return  string  The view path name from DI parameters.
+     */
+    protected function getView($name)
+    {
+        return $this->container->getParameter('gitwiki.views.'.$name);
+    }
 }
