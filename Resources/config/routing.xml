@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<routes xmlns="http://www.symfony-project.org/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+    <route id="index" pattern="/">
+        <default key="_controller">gitwiki.controller:indexAction</default>
+    </route>
+
+    <route id="history" pattern="/:name/history">
+        <default key="_controller">gitwiki.controller:historyAction</default>
+    </route>
+
+    <route id="edit" pattern="/:name/edit">
+        <default key="_controller">gitwiki.controller:editAction</default>
+    </route>
+
+    <route id="view" pattern="/:name">
+        <default key="_controller">gitwiki.controller:viewAction</default>
+    </route>
+<!--    
+    <route id="view" pattern="/file/:name">
+        <default key="_controller">gitwiki.controller:fileAction</default>
+    </route>
+-->
+</routes>
