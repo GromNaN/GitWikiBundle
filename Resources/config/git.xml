@@ -8,7 +8,7 @@
         <parameter key="gitwiki.repository.class">Bundle\GromNaN\GitWikiBundle\Model\PageRepository</parameter>
         <parameter key="gitwiki.repository.dir">%kernel.root_dir%/wiki</parameter>
         <parameter key="gitwiki.repository.debug">false</parameter>
-        <parameter key="gitwiki.repository.executable">/opt/local/bin/git</parameter>
+        <parameter key="gitwiki.repository.executable">command git</parameter>
     </parameters>
 
     <services>

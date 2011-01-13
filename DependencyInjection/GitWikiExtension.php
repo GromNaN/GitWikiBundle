@@ -16,14 +16,14 @@ class GitWikiExtension extends Extension
         $loader->load('git.xml');
         $loader->load('views.xml');
 
-        // Repository
+        // Git Repository
         if (!empty($config['dir'])) {
             $container->setParameter('gitwiki.repository.dir', $config['dir']);
         }
         if (!empty($config['debug'])) {
             $container->setParameter('gitwiki.repository.debug', $config['debug']);
         }
-        if (!empty($config['dir'])) {
+        if (!empty($config['executable'])) {
             $container->setParameter('gitwiki.repository.executable', $config['executable']);
         }
 
