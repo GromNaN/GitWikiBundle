@@ -35,7 +35,7 @@ class GitWikiController extends Controller
     }
 
     /**
-     * @route /wiki/:name/edit
+     * @route /wiki/edit/:name
      */
     public function editAction($name)
     {
@@ -59,7 +59,7 @@ class GitWikiController extends Controller
     }
 
     /**
-     * @route /wiki/:name/history
+     * @route /wiki/history/:name
      */
     public function historyAction($name)
     {
@@ -88,6 +88,6 @@ class GitWikiController extends Controller
      */
     protected function getView($name)
     {
-        return $this->container->getParameter('gitwiki.views.'.$name);
+        return $this->container->getParameter('gitwiki.views.'.$name.'.html');
     }
 }
