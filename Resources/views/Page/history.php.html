@@ -1,0 +1,32 @@
+<?php $view->extend('GitWikiBundle:Page:layout.php.html') ?>
+
+
+<div id="wiki-head">
+    <h1><?php echo $page->getTitle() ?></h1>
+    <ul id="gitwiki-nav">
+        <li><a href="<?php echo $view['router']->generate('edit', array('name' => $page->getFilename())) ?>" title="Edit">Edit</a></li>
+        <li><a href="<?php echo $view['router']->generate('history', array('name' => $page->getFilename())) ?>" title="History">History</a></li>
+    </ul>
+</div>
+<div id="wiki-history">
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Author</th>
+                <th>Message</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($commits as $commit): ?>
+                <tr>
+                    <td><?php echo $commit->getId() ?></td>
+                    <td><a href="mailto:<?php echo $commit->getAuthorEmail() ?>" title="Email"><?php echo $commit->getAuthorName() ?></a></td>
+                    <td><?php echo $commit->getMessage() ?></td>
+                    <td><?php echo $commit->getAuthoredDate()->format('r') ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><?php $view['slots']->output('title', 'GitWiki') ?></title>
+    <link href="<?php echo $view['assets']->getUrl('bundles/gitwiki/css/gitwiki.css') ?>" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="gitwiki-content">
+<?php $view['slots']->output('_content') ?>
+</div>
+</body>

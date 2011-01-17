@@ -1,0 +1,15 @@
+<?php $view->extend('GitWikiBundle:Page:layout.php.html') ?>
+
+<div id="wiki-head">
+    <h1><?php echo $page->getTitle() ?></h1>
+    <ul id="gitwiki-nav">
+        <li><a href="<?php echo $view['router']->generate('edit', array('name' => $page->getFilename())) ?>" title="Edit">Edit</a></li>
+        <li><a href="<?php echo $view['router']->generate('history', array('name' => $page->getFilename())) ?>" title="History">History</a></li>
+    </ul>
+</div>
+<div id="wiki-body">
+    <?php echo $page->render() ?>
+</div>
+<div id="footer">
+    <p id="last-edit">Last edited by <strong><?php echo $page->getLastCommit()->getCommiterName() ?></strong>, on <?php echo $page->getLastCommit()->getCommittedDate()->format('Y-m-d H:i:s') ?></p>
+</div>
