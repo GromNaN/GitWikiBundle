@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GromNaN\GitWikiBundle\Model;
+namespace Bundle\GitWikiBundle\Model;
 
 class Edition
 {
@@ -12,7 +12,7 @@ class Edition
      */
     protected $message;
     /**
-     * Edited page
+     * Edited page (file)
      * 
      * @var Page
      */

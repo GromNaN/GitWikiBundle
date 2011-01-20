@@ -1,10 +1,10 @@
 <?php
 
-namespace Bundle\GromNaN\GitWikiBundle\Form;
+namespace Bundle\GitWikiBundle\Form;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;
-use Bundle\GromNaN\GitWikiBundle\Model\Page;
+use Bundle\GitWikiBundle\Model\Page;
 
 class EditForm extends Form
 {

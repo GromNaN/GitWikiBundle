@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GromNaN\GitWikiBundle\DependencyInjection;
+namespace Bundle\GitWikiBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

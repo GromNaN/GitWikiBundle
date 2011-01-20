@@ -24,7 +24,7 @@ Enable the bundle in your application kernel.
     {
         return array(
             # ...
-            new Bundle\GromNaN\GitWikiBundle\GitWikiBundle(),
+            new Bundle\GitWikiBundle\GitWikiBundle(),
             # ...
         );
     }
@@ -52,7 +52,11 @@ DI parameters
 ::
 
     # app/config/config.yml
-    gitwiki.config: ~
+    gitwiki.config: 
+        dir:        %kernel.root_dir%/wiki
+        debug:      false
+        executable: /usr/bin/git or "C:\Program Files\Git\git.exe"
+
 
 Alternativement, for advanced configuration, the available parameters are:
 
@@ -64,9 +68,9 @@ Alternativement, for advanced configuration, the available parameters are:
         debug:      false
         executable: /usr/bin/git
         views:
-            view:       GromNaN\GitWikiBundle:Default:view.php
-            edit:       GromNaN\GitWikiBundle:Default:edit.php
-            history:    GromNaN\GitWikiBundle:Default:history.php
+            view:       GitWikiBundle:Default:view.php.html
+            edit:       GitWikiBundle:Default:edit.php.html
+            history:    GitWikiBundle:Default:history.php.html
 
 Git repository
 --------------
@@ -85,7 +89,7 @@ Routing
 
     # app/config/routing.yml
     wiki:
-        resource: GromNaN/GitWikiBundle/Resources/config/routing.xml
+        resource: GitWikiBundle/Resources/config/routing.xml
         prefix:   /wiki
 
 
@@ -93,4 +97,5 @@ Contribute
 ==========
 
 Project hosting on https://github.com/GromNaN/GitWikiBundle
+
 Feel free to send pull requests !

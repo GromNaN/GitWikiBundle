@@ -5,24 +5,59 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-    <route id="index" pattern="/">
-        <default key="_controller">gitwiki.controller:indexAction</default>
+    <route id="gitwiki.wiki.home" pattern="/">
+        <default key="_controller">gitwiki.controller.wiki:indexAction</default>
+    </route>
+    
+    <route id="gitwiki.wiki.pages" pattern="/_pages">
+        <default key="_controller">gitwiki.controller.wiki:pagesAction</default>
+    </route>
+    
+    <route id="gitwiki.wiki.history" pattern="/_history">
+        <default key="_controller">gitwiki.controller.wiki:historyAction</default>
+    </route>
+    
+    <route id="gitwiki.wiki.compare" pattern="/_compare">
+        <default key="_controller">gitwiki.controller.wiki:compareAction</default>
+    </route>
+    
+    <route id="gitwiki.wiki.compare1" pattern="/_compare/{commit1}">
+        <default key="_controller">gitwiki.controller.wiki:compareAction</default>
+    </route>
+    
+    <route id="gitwiki.wiki.compare2" pattern="/_compare/{commit1}...{commit2}">
+        <default key="_controller">gitwiki.controller.wiki:compareAction</default>
+    </route>
+    
+    <route id="gitwiki.wiki.search" pattern="/_search">
+        <default key="_controller">gitwiki.controller.wiki:searchAction</default>
     </route>
 
-    <route id="history" pattern="/history/{name}">
-        <default key="_controller">gitwiki.controller:historyAction</default>
+    <route id="gitwiki.page.edit" pattern="/{name}/_edit">
+        <default key="_controller">gitwiki.controller.page:editAction</default>
     </route>
 
-    <route id="edit" pattern="/edit/{name}">
-        <default key="_controller">gitwiki.controller:editAction</default>
+    <route id="gitwiki.page.history" pattern="/{name}/_history">
+        <default key="_controller">gitwiki.controller.page:historyAction</default>
+    </route>
+    
+    <route id="gitwiki.page.compare" pattern="/{name}/_compare">
+        <default key="_controller">gitwiki.controller.page:compareAction</default>
+    </route>
+    
+    <route id="gitwiki.page.compare1" pattern="/{name}/_compare/{commit1}">
+        <default key="_controller">gitwiki.controller.page:compareAction</default>
+    </route>
+    
+    <route id="gitwiki.page.compare2" pattern="/{name}/_compare/{commit1}...{commit2}">
+        <default key="_controller">gitwiki.controller.page:compareAction</default>
     </route>
 
-    <route id="view" pattern="/{name}">
-        <default key="_controller">gitwiki.controller:viewAction</default>
+    <route id="gitwiki.page.view" pattern="/{name}">
+        <default key="_controller">gitwiki.controller.page:viewAction</default>
     </route>
-<!--    
-    <route id="view" pattern="/file/:name">
-        <default key="_controller">gitwiki.controller:fileAction</default>
+
+    <route id="gitwiki.page.view_version" pattern="/{name}/{commit}">
+        <default key="_controller">gitwiki.controller.page:viewAction</default>
     </route>
--->
 </routes>

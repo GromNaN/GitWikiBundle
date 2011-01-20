@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GromNaN\GitWikiBundle\Form;
+namespace Bundle\GitWikiBundle\Form;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextareaField;

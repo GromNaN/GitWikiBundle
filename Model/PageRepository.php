@@ -1,8 +1,9 @@
 <?php
 
-namespace Bundle\GromNaN\GitWikiBundle\Model;
+namespace Bundle\GitWikiBundle\Model;
 
 use Git\Repository;
+use Symfony\Component\Finder\Finder;
 
 class PageRepository extends Repository
 {
@@ -10,12 +11,23 @@ class PageRepository extends Repository
      * Read or create a page file in the repository.
      * 
      * @param string $name
-     * @return Page 
+     * @return Git\Repository\Page 
      */
     public function getPage($name)
     {
         return new Page($this, $name);
     }
+    
+    /**
+     * Get the list of every pages in the repository.
+     * 
+     * @return Symfony\Component\Finder\Finder
+     */
+    public function getPages()
+    {
+        $finder = new Finder();
+        $finder->files();
+        $finder->in($this->getDir());
+        return $finder;
+    }
 }
-
-?>

@@ -1,13 +1,6 @@
 <?php $view->extend('GitWikiBundle:Page:layout.php.html') ?>
 
 
-<div id="wiki-head">
-    <h1><?php echo $page->getTitle() ?></h1>
-    <ul id="gitwiki-nav">
-        <li><a href="<?php echo $view['router']->generate('edit', array('name' => $page->getFilename())) ?>" title="Edit">Edit</a></li>
-        <li><a href="<?php echo $view['router']->generate('history', array('name' => $page->getFilename())) ?>" title="History">History</a></li>
-    </ul>
-</div>
 <div id="wiki-history">
     <table>
         <thead>
@@ -21,7 +14,7 @@
         <tbody>
             <?php foreach ($commits as $commit): ?>
                 <tr>
-                    <td><?php echo $commit->getId() ?></td>
+                    <td><a href="<?php echo $view['router']->generate('gitwiki.page.compare1', array('name' => $page->getFilename(), 'commit1' => $commit->getId()))?>" title="View diff"><?php echo $commit->getId() ?></a></td>
                     <td><a href="mailto:<?php echo $commit->getAuthorEmail() ?>" title="Email"><?php echo $commit->getAuthorName() ?></a></td>
                     <td><?php echo $commit->getMessage() ?></td>
                     <td><?php echo $commit->getAuthoredDate()->format('r') ?></td>

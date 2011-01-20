@@ -5,21 +5,28 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <!-- Controller -->
-        <parameter key="gitwiki.controller.class">Bundle\GromNaN\GitWikiBundle\Controller\GitWikiController</parameter>
+        <!-- Controllers -->
+        <parameter key="gitwiki.controller.wiki.class">Bundle\GitWikiBundle\Controller\WikiController</parameter>
+        <parameter key="gitwiki.controller.page.class">Bundle\GitWikiBundle\Controller\PageController</parameter>
         
+        <!-- Default pages -->
         <parameter key="gitwiki.page.index">index</parameter>
-        <parameter key="gitwiki.page.404">error/404</parameter>
     </parameters>
 
     <services>
-        <!-- Controller -->
-        <service id="gitwiki.controller" class="%gitwiki.controller.class%">
+        <!-- Controllers -->
+        <service id="gitwiki.controller.wiki" class="%gitwiki.controller.wiki.class%">
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
         </service>
-        
+
+        <service id="gitwiki.controller.page" class="%gitwiki.controller.page.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
     </services>
 
 </container>
