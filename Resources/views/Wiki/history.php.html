@@ -12,7 +12,7 @@ $view->extend('GitWikiBundle::layout.php.html');
             <?php foreach ($commits as $commit): ?>
                 <tr>
                     <td class="checkbox">
-                        <input id="versions_<?php echo $commit->getId() ?>" name="versions[]" type="checkbox" value="<?php echo $commit->getId() ?>" />
+                        <input id="hashes_<?php echo $commit->getId() ?>" name="hashes[]" type="checkbox" value="<?php echo $commit->getId() ?>" />
                     </td>
                     <td class="author">
                         <a href="mailto:<?php echo $commit->getAuthorEmail() ?>" title="Email">
@@ -22,12 +22,11 @@ $view->extend('GitWikiBundle::layout.php.html');
                     <td class="commit-name">
                         <em><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?>: </em>
                         <?php echo $commit->getMessage() ?> 
-                        [<a href="<?php echo $view['router']->generate('gitwiki.wiki.compare1', array('commit1' => $commit->getId())) ?>" title="View diff"><?php echo $commit->getId() ?></a>]
+                        [<a href="<?php echo $view['router']->generate('gitwiki.wiki.compare1', array('hash1' => $commit->getId())) ?>" title="View diff"><?php echo $commit->getId() ?></a>]
                     </td>
                 </tr>
             <?php endforeach ?>
         </tbody>
     </table>
     <input class="action-compare-versions" type="submit" value="Compare Revisions" />
-    
 </form>

@@ -25,7 +25,8 @@ class Page extends File
      */
     public function render()
     {
-        return '<pre>'.\htmlentities($this->getContent()).'</pre>';
+        //return '<pre>'.\htmlentities($this->getContent()).'</pre>';
+        return $this->getContent();
     }
 
     /**
@@ -36,7 +37,7 @@ class Page extends File
      */
     public function getFormat()
     {
-        if (preg_match('#\.([:alnum:]+)$#', $this->getFilename(), $matches)) {
+        if (preg_match('/\.([:alnum:]+)$/', $this->getFilename(), $matches)) {
             return $matches[0];
         } else {
             return null;
@@ -51,7 +52,7 @@ class Page extends File
     public function getLastCommit()
     {
         if (null === $this->lastCommit) {
-            $commits = $this->getCommits(1);
+            $commits = $this->log(1);
             $this->lastCommit = isset($commits[0]) ? $commits[0] : null;
         }
         return $this->lastCommit;

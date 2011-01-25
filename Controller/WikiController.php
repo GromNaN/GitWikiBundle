@@ -18,7 +18,7 @@ class WikiController extends Controller
     public function indexAction()
     {
         $name = $this->container->getParameter('gitwiki.page.index');
-        $uri = $this->get('router')->generate('gitwiki.page.view', array('name' => $name));
+        $uri = $this->getRoute('page.view', array('name' => $name));
         return $this->redirect($uri);
     }
 
@@ -29,7 +29,7 @@ class WikiController extends Controller
      */
     public function pagesAction()
     {
-        $pages = $this->container->get('gitwiki.repository')->getPages();
+        $pages = $this->getRepository()->getPages();
         return $this->render($this->getView('pages'), array(
             'pages' => $pages,
         ));
@@ -42,7 +42,7 @@ class WikiController extends Controller
      */
     public function historyAction()
     {
-        $commits = $this->container->get('gitwiki.repository')->getCommits();
+        $commits = $this->getRepository()->log(10);
 
         return $this->render($this->getView('history'), array(
             'commits' => $commits,
@@ -52,17 +52,14 @@ class WikiController extends Controller
     /**
      * Display diff of 1 commit or between 2 commits
      * 
-     * @route /_compare
-     * @route /_compare/{commit1}
-     * @route /_compare/{commit1}...{commit2}
+     * @route /_compare/{hash1}
+     * @route /_compare/{hash1}...{hash2}
+     * @param string $hash1 SHA hash
+     * @param string $hash2 SHA hash
      */
-    public function compareAction($commit1 = null, $commit2 = null)
+    public function compareAction($hash1, $hash2 = null)
     {
-        if ('POST' === $this->get('request')->getMethod()) {
-            return $this->redirectToCompare();
-        }
-
-        $diff = $this->container->get('gitwiki.repository')->getDiff($commit1, $commit2);
+        $diff = $this->getRepository()->diff($hash1, $hash2);
 
         return $this->render($this->getView('compare'), array(
             'diff' => $diff,
@@ -71,19 +68,27 @@ class WikiController extends Controller
 
     /**
      * Get POST versions list and redirect to the compare page.
+     * 
+     * @route /_compare
      */
-    protected function redirectToCompare()
+    public function compareRedirectAction()
     {
-        $versions = $this->get('request')->get('versions');
+        if ('POST' === $this->get('request')->getMethod()) {
 
-        if (isset($versions[0])) {
-            if (isset($versions[1])) {
-                return $this->redirect($this->get('router')->generate('gitwiki.wiki.compare2', array('commit1' => $versions[1], 'commit2' => $versions[0])));
-            } else {
-                return $this->redirect($this->get('router')->generate('gitwiki.wiki.compare1', array('commit1' => $versions[0])));
+            $hashes = $this->get('request')->get('hashes');
+
+            if (isset($hashes[0])) {
+                if (isset($hashes[1])) {
+                    return $this->redirect($this->getRoute('wiki.compare2', 
+                            array('hash1' => $hashes[1], 'hash2' => $hashes[0])));
+                } else {
+                    return $this->redirect($this->getRoute('wiki.compare1', 
+                            array('hash1' => $hashes[0])));
+                }
             }
         }
-        throw new NotFoundHttpException('Invalid Git versions');
+
+        throw new NotFoundHttpException('Invalid versions in POST data');
     }
 
     /**
@@ -108,4 +113,23 @@ class WikiController extends Controller
         return $this->container->getParameter('gitwiki.views.wiki.'.$name);
     }
 
+    /**
+     * Generate a route
+     * 
+     * @param string $name
+     * @param array $parameters
+     * @return string
+     */
+    protected function getRoute($name, array $parameters = array())
+    {
+        return $this->get('router')->generate('gitwiki.'.$name, $parameters);
+    }
+    
+    /**
+     * @return Bundle\GitWikiBundle\Model\PageRepository
+     */
+    protected function getRepository()
+    {
+        return $this->container->get('gitwiki.repository');
+    }
 }

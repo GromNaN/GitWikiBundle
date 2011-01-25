@@ -14,5 +14,17 @@
         <parameter key="gitwiki.views.page.edit">GitWikiBundle:Page:edit.php.html</parameter>
         <parameter key="gitwiki.views.page.history">GitWikiBundle:Page:history.php.html</parameter>
         <parameter key="gitwiki.views.page.compare">GitWikiBundle:Page:compare.php.html</parameter>
+        
+        <parameter key="templating.helper.finder.class">Bundle\GitWikiBundle\Helper\FinderHelper</parameter>
+        <parameter key="templating.helper.git.class">Bundle\GitWikiBundle\Helper\GitHelper</parameter>
     </parameters>
+    
+    <services>
+        <service id="templating.helper.finder" class="%templating.helper.finder.class%">
+            <tag name="templating.helper" alias="finder" />
+        </service>
+        <service id="templating.helper.git" class="%templating.helper.git.class%">
+            <tag name="templating.helper" alias="git" />
+        </service>
+    </services>
 </container>

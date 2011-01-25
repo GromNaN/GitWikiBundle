@@ -1,25 +1,32 @@
-<?php $view->extend('GitWikiBundle:Page:layout.php.html') ?>
+<?php 
+/**
+ * @var  array  $commits  List of commits to display
+ */
+$view->extend('GitWikiBundle:Page:layout.php.html');
+?>
 
-
-<div id="wiki-history">
+<form id="versions-form" method="post" action="<?php echo $view['router']->generate('gitwiki.page.compare', array('name' => $page->getFilename())) ?>"> 
+    <input class="action-compare-versions" type="submit" value="Compare Revisions" />
     <table>
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Author</th>
-                <th>Message</th>
-                <th>Date</th>
-            </tr>
-        </thead>
         <tbody>
             <?php foreach ($commits as $commit): ?>
                 <tr>
-                    <td><a href="<?php echo $view['router']->generate('gitwiki.page.compare1', array('name' => $page->getFilename(), 'commit1' => $commit->getId()))?>" title="View diff"><?php echo $commit->getId() ?></a></td>
-                    <td><a href="mailto:<?php echo $commit->getAuthorEmail() ?>" title="Email"><?php echo $commit->getAuthorName() ?></a></td>
-                    <td><?php echo $commit->getMessage() ?></td>
-                    <td><?php echo $commit->getAuthoredDate()->format('r') ?></td>
+                    <td class="checkbox">
+                        <input id="hashes_<?php echo $commit->getId() ?>" name="hashes[]" type="checkbox" value="<?php echo $commit->getId() ?>" />
+                    </td>
+                    <td class="author">
+                        <a href="mailto:<?php echo $commit->getAuthorEmail() ?>" title="Email">
+                        <?php echo $commit->getAuthorName() ?>
+                        </a>
+                    </td>
+                    <td class="commit-name">
+                        <em><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?>: </em>
+                        <?php echo $commit->getMessage() ?> 
+                        [<a href="<?php echo $view['router']->generate('gitwiki.page.compare1', array('name' => $page->getFilename(), 'hash1' => $commit->getId())) ?>" title="View diff"><?php echo $commit->getId() ?></a>]
+                    </td>
                 </tr>
             <?php endforeach ?>
         </tbody>
     </table>
-</div>
+    <input class="action-compare-versions" type="submit" value="Compare Revisions" />
+</form>

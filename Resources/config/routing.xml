@@ -8,27 +8,27 @@
     <route id="gitwiki.wiki.home" pattern="/">
         <default key="_controller">gitwiki.controller.wiki:indexAction</default>
     </route>
-    
+
     <route id="gitwiki.wiki.pages" pattern="/_pages">
         <default key="_controller">gitwiki.controller.wiki:pagesAction</default>
     </route>
-    
+
     <route id="gitwiki.wiki.history" pattern="/_history">
         <default key="_controller">gitwiki.controller.wiki:historyAction</default>
     </route>
-    
+
     <route id="gitwiki.wiki.compare" pattern="/_compare">
+        <default key="_controller">gitwiki.controller.wiki:compareRedirectAction</default>
+    </route>
+
+    <route id="gitwiki.wiki.compare1" pattern="/_compare/{hash1}">
         <default key="_controller">gitwiki.controller.wiki:compareAction</default>
     </route>
-    
-    <route id="gitwiki.wiki.compare1" pattern="/_compare/{commit1}">
+
+    <route id="gitwiki.wiki.compare2" pattern="/_compare/{hash1}...{hash2}">
         <default key="_controller">gitwiki.controller.wiki:compareAction</default>
     </route>
-    
-    <route id="gitwiki.wiki.compare2" pattern="/_compare/{commit1}...{commit2}">
-        <default key="_controller">gitwiki.controller.wiki:compareAction</default>
-    </route>
-    
+
     <route id="gitwiki.wiki.search" pattern="/_search">
         <default key="_controller">gitwiki.controller.wiki:searchAction</default>
     </route>
@@ -39,17 +39,18 @@
 
     <route id="gitwiki.page.history" pattern="/{name}/_history">
         <default key="_controller">gitwiki.controller.page:historyAction</default>
+        <option key="segment_separators">/</option>
     </route>
-    
+
     <route id="gitwiki.page.compare" pattern="/{name}/_compare">
+        <default key="_controller">gitwiki.controller.page:compareRedirectAction</default>
+    </route>
+
+    <route id="gitwiki.page.compare1" pattern="/{name}/_compare/{hash1}">
         <default key="_controller">gitwiki.controller.page:compareAction</default>
     </route>
-    
-    <route id="gitwiki.page.compare1" pattern="/{name}/_compare/{commit1}">
-        <default key="_controller">gitwiki.controller.page:compareAction</default>
-    </route>
-    
-    <route id="gitwiki.page.compare2" pattern="/{name}/_compare/{commit1}...{commit2}">
+
+    <route id="gitwiki.page.compare2" pattern="/{name}/_compare/{hash1}...{hash2}">
         <default key="_controller">gitwiki.controller.page:compareAction</default>
     </route>
 

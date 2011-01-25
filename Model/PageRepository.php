@@ -27,7 +27,8 @@ class PageRepository extends Repository
     {
         $finder = new Finder();
         $finder->files();
-        $finder->in($this->getDir());
+        $finder->in($this->getDir())
+               ->sortByName();
         return $finder;
     }
 }
