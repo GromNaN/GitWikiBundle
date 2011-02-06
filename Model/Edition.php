@@ -4,7 +4,6 @@ namespace Bundle\GitWikiBundle\Model;
 
 class Edition
 {
-
     /**
      * Message description of the commit
      * 
@@ -17,10 +16,16 @@ class Edition
      * @var Page
      */
     protected $page;
+    /**
+     *
+     * @var Git\User
+     */
+    protected $gitUser;
 
     function __construct($page)
     {
         $this->page = $page;
+        $this->gitUser = new \Git\User('', '');
     }
 
     public function getMessage()
@@ -41,6 +46,16 @@ class Edition
     public function setPage($page)
     {
         $this->page = $page;
+    }
+
+    public function getGitUser()
+    {
+        return $this->gitUser;
+    }
+
+    public function setGitUser($gitUser)
+    {
+        $this->gitUser = $gitUser;
     }
 
 }

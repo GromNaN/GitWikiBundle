@@ -1,8 +1,0 @@
-Bundle\GitWikiBundle\Model\Edition:
-    proterties:
-        page:       [Valid]
-        message:    [NotBlank]
-
-Bundle\GitWikiBundle\Model\Page:
-    proterties:
-        content:    [NotBlank]

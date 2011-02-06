@@ -7,6 +7,6 @@
 
 <p id="last-edit">
     Last edited by 
-    <strong><?php echo $page->getLastCommit()->getAuthorName() ?></strong>,
+    <strong><?php echo $page->getLastCommit()->getAuthor()->getName() ?></strong>,
     on <?php echo $page->getLastCommit()->getAuthoredDate()->format('Y-m-d H:i:s') ?>
 </p>

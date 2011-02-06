@@ -3,7 +3,7 @@
 namespace Bundle\GitWikiBundle\Helper;
 
 /**
- * GitHelper format 
+ * GitHelper format
  *
  * @author Jérôme Tamarelle <jerome@tamarelle.net>
  */
@@ -41,12 +41,20 @@ class GitHelper extends Helper
     // --- PROTECTED ---
 
     /**
-     * @param string $line 
+     * @param string $line
      * @return string CSS class name
      */
     protected function getLineClass($line)
     {
-        if (\preg_match('/^@@/', $line)) { // Jump
+        if (\preg_match('/^diff/', $line)) {
+            return 'git-diff-file';
+        } elseif (\preg_match('/^index/', $line)) {
+            return 'git-diff-index';
+        } elseif (\preg_match('/^\+\+\+/', $line)) {
+            return 'git-diff-insert';
+        } elseif (\preg_match('/^\-\-\-/', $line)) {
+            return 'git-diff-delete';
+        } elseif (\preg_match('/^@@/', $line)) {
             return 'git-jump';
         } elseif (\preg_match('/^\+/', $line)) {
             return 'git-insert';

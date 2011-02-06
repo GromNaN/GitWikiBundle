@@ -12,8 +12,8 @@ class WikiController extends Controller
 
     /**
      * Redirect to homepage
-     * 
-     * @route /
+     *
+     * @Route(
      */
     public function indexAction()
     {
@@ -24,7 +24,7 @@ class WikiController extends Controller
 
     /**
      * List all pages
-     * 
+     *
      * @route /_pages
      */
     public function pagesAction()
@@ -37,7 +37,7 @@ class WikiController extends Controller
 
     /**
      * List last changes on the whole wiki
-     * 
+     *
      * @route /_history
      */
     public function historyAction()
@@ -45,13 +45,30 @@ class WikiController extends Controller
         $commits = $this->getRepository()->log(10);
 
         return $this->render($this->getView('history'), array(
-            'commits' => $commits,
+            'commits' => $commits
+        ));
+    }
+
+    /**
+     * Commit details
+     *
+     * @route /_commit/{hash}
+     * @param string $hash SHA1 hash of the commit
+     */
+    public function commitAction($hash)
+    {
+        $commit = $this->getRepository()->getCommit($hash);
+        $diff = $commit->getRawDiff();
+
+        return $this->render($this->getView('commit'), array(
+            'commit' => $commit,
+            'diff' => $diff
         ));
     }
 
     /**
      * Display diff of 1 commit or between 2 commits
-     * 
+     *
      * @route /_compare/{hash1}
      * @route /_compare/{hash1}...{hash2}
      * @param string $hash1 SHA hash
@@ -59,16 +76,16 @@ class WikiController extends Controller
      */
     public function compareAction($hash1, $hash2 = null)
     {
-        $diff = $this->getRepository()->diff($hash1, $hash2);
+        $diff = $this->getRepository()->diff($hash1, $hash2, 3);
 
         return $this->render($this->getView('compare'), array(
-            'diff' => $diff,
+            'diff' => $diff
         ));
     }
 
     /**
      * Get POST versions list and redirect to the compare page.
-     * 
+     *
      * @route /_compare
      */
     public function compareRedirectAction()
@@ -79,10 +96,10 @@ class WikiController extends Controller
 
             if (isset($hashes[0])) {
                 if (isset($hashes[1])) {
-                    return $this->redirect($this->getRoute('wiki.compare2', 
+                    return $this->redirect($this->getRoute('wiki.compare2',
                             array('hash1' => $hashes[1], 'hash2' => $hashes[0])));
                 } else {
-                    return $this->redirect($this->getRoute('wiki.compare1', 
+                    return $this->redirect($this->getRoute('wiki.compare1',
                             array('hash1' => $hashes[0])));
                 }
             }
@@ -93,7 +110,7 @@ class WikiController extends Controller
 
     /**
      * Find occurences of the searched text
-     * 
+     *
      * @route /_search?q=...
      */
     public function searchAction()
@@ -104,7 +121,7 @@ class WikiController extends Controller
 
     /**
      * Get the configured view.
-     * 
+     *
      * @param  string  $name The view name
      * @return  string  The view path name from DI parameters.
      */
@@ -115,7 +132,7 @@ class WikiController extends Controller
 
     /**
      * Generate a route
-     * 
+     *
      * @param string $name
      * @param array $parameters
      * @return string
@@ -124,7 +141,7 @@ class WikiController extends Controller
     {
         return $this->get('router')->generate('gitwiki.'.$name, $parameters);
     }
-    
+
     /**
      * @return Bundle\GitWikiBundle\Model\PageRepository
      */

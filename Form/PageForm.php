@@ -9,6 +9,6 @@ class PageForm extends Form
 {
     public function configure()
     {
-        $this->add(new TextareaField('content'));
+        $this->add(new TextareaField('contents'));
     }
 }

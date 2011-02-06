@@ -19,20 +19,21 @@ class Page extends File
 
     /**
      * Convert file content to HTML using the format parser.
-     * 
+     *
      * @todo Implement rendering
      * @return string The rendered page content.
      */
     public function render()
     {
-        //return '<pre>'.\htmlentities($this->getContent()).'</pre>';
-        return $this->getContent();
+        return '<pre>'.\htmlentities($this->getContents()).'</pre>';
+        //return $this->getContent();
+        //return $this->container['markdownParser']->transform($this->getContent());
     }
 
     /**
      * Deduct the file format from its extension.
      * If the file does not have any extension, null is returned.
-     * 
+     *
      * @return string File format (markdown, rst ...)
      */
     public function getFormat()
@@ -46,14 +47,14 @@ class Page extends File
 
     /**
      * Get the last commit on the file.
-     * 
+     *
      * @return Git\Commit
      */
     public function getLastCommit()
     {
         if (null === $this->lastCommit) {
             $commits = $this->log(1);
-            $this->lastCommit = isset($commits[0]) ? $commits[0] : null;
+            $this->lastCommit = current($commits);
         }
         return $this->lastCommit;
     }
@@ -61,10 +62,10 @@ class Page extends File
     /**
      * {@inheritDoc}
      */
-    public function commit($message)
+    public function commit($message, $author = null)
     {
         $this->lastCommit = null;
-        parent::commit($message);
+        parent::commit($message, $author);
     }
 
 }

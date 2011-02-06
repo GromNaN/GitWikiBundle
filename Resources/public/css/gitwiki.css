@@ -182,6 +182,15 @@ nav li a:active {
     padding: 0 0.5em;
     text-align: right;
 }
+.git-diff-insert {
+    display: none;
+}
+.git-diff-delete {
+    display: none;
+}
+.git-jump {
+    background-color: #EEE;
+}
 .git-insert {
     background-color: #DFD;
 }

@@ -12,17 +12,17 @@ $view->extend('GitWikiBundle:Page:layout.php.html');
             <?php foreach ($commits as $commit): ?>
                 <tr>
                     <td class="checkbox">
-                        <input id="hashes_<?php echo $commit->getId() ?>" name="hashes[]" type="checkbox" value="<?php echo $commit->getId() ?>" />
+                        <input id="hashes_<?php echo $commit->getHash() ?>" name="hashes[]" type="checkbox" value="<?php echo $commit->getHash() ?>" />
                     </td>
                     <td class="author">
-                        <a href="mailto:<?php echo $commit->getAuthorEmail() ?>" title="Email">
-                        <?php echo $commit->getAuthorName() ?>
+                        <a href="mailto:<?php echo $commit->getAuthor()->getEmail() ?>" title="Email">
+                        <?php echo $commit->getAuthor()->getName() ?>
                         </a>
                     </td>
                     <td class="commit-name">
                         <em><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?>: </em>
                         <?php echo $commit->getMessage() ?> 
-                        [<a href="<?php echo $view['router']->generate('gitwiki.page.compare1', array('name' => $page->getFilename(), 'hash1' => $commit->getId())) ?>" title="View diff"><?php echo $commit->getId() ?></a>]
+                        [<a href="<?php echo $view['router']->generate('gitwiki.page.compare1', array('name' => $page->getFilename(), 'hash1' => $commit->getHash())) ?>" title="View diff"><?php echo $commit->getHash() ?></a>]
                     </td>
                 </tr>
             <?php endforeach ?>

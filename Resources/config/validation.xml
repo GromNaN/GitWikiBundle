@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://www.symfony-project.org/schema/dic/constraint-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/constraint-mapping
+        http://www.symfony-project.org/schema/dic/services/constraint-mapping-1.0.xsd">
+
+    <class name="Bundle\GitWikiBundle\Model\Edition">
+
+        <property name="page">
+            <constraint name="Valid" />
+        </property>
+        
+        <property name="message">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a message describing your modifications.</option>
+                <option name="groups">Edition</option>
+            </constraint>
+        </property>
+
+        <property name="gitUser">
+            <constraint name="Valid" />
+        </property>
+    </class>
+
+    <class name="Git\User">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">Please enter your name.</option>
+                <option name="groups">Edition</option>
+            </constraint>
+        </property>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">Please enter your email.</option>
+                <option name="groups">Edition</option>
+            </constraint>
+            <constraint name="Email">
+                <option name="message">Please enter a valid email.</option>
+                <option name="groups">Edition</option>
+            </constraint>
+        </property>
+    </class>
+
+</constraint-mapping>

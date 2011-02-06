@@ -1,0 +1,17 @@
+<?php
+/**
+ * @var string $commit
+ */
+$view->extend('GitWikiBundle::layout.php.html');
+?>
+
+<div class="git-commit-infos">
+    <p class="git-message"><?php echo nl2br($commit->getMessage()) ?></p>
+    <ul class="git-user">
+        <li><?php echo $commit->getAuthor()->getName() ?></li>
+        <li><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?></li>
+    </ul>
+</div>
+
+
+<?php echo $view->render('GitWikiBundle:Blocks:diff.php.html', array('diff' => $diff)) ?>

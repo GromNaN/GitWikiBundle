@@ -9,6 +9,7 @@
         <parameter key="gitwiki.views.wiki.history">GitWikiBundle:Wiki:history.php.html</parameter>
         <parameter key="gitwiki.views.wiki.compare">GitWikiBundle:Wiki:compare.php.html</parameter>
         <parameter key="gitwiki.views.wiki.search">GitWikiBundle:Wiki:search.php.html</parameter>
+        <parameter key="gitwiki.views.wiki.commit">GitWikiBundle:Wiki:commit.php.html</parameter>
         
         <parameter key="gitwiki.views.page.view">GitWikiBundle:Page:view.php.html</parameter>
         <parameter key="gitwiki.views.page.edit">GitWikiBundle:Page:edit.php.html</parameter>

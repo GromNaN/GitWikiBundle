@@ -10,7 +10,7 @@
         <parameter key="gitwiki.controller.page.class">Bundle\GitWikiBundle\Controller\PageController</parameter>
         
         <!-- Default pages -->
-        <parameter key="gitwiki.page.index">index</parameter>
+        <parameter key="gitwiki.page.index">index.rst</parameter>
     </parameters>
 
     <services>

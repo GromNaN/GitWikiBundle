@@ -3,7 +3,7 @@
 namespace Bundle\GitWikiBundle\Helper;
 
 /**
- * FinderHelper format 
+ * FinderHelper format
  *
  * @author Jérôme Tamarelle <jerome@tamarelle.net>
  */
@@ -23,6 +23,12 @@ class FinderHelper extends Helper
         return 'finder';
     }
 
+    /**
+     *
+     * @param Finder $finder
+     * @param type $base
+     * @return array 
+     */
     public function tree(Finder $finder, $base = '/')
     {
         $tree = array();
@@ -37,10 +43,7 @@ class FinderHelper extends Helper
             }
             $current[$path_step] = $file;
         }
-        
+
         return $tree;
     }
-
-    // --- PROTECTED ---
-    
 }
