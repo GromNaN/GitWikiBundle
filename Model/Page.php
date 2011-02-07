@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Model;
+namespace Git\WikiBundle\Model;
 
-use Git\File;
+use Git\Core\File;
 
 class Page extends File
 {

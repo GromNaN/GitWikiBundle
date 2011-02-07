@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Helper;
+namespace Git\WikiBundle\Helper;
 
 /**
  * GitHelper format

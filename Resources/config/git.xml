@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="gitwiki.repository.class">Bundle\GitWikiBundle\Model\PageRepository</parameter>
+        <parameter key="gitwiki.repository.class">Git\WikiBundle\Model\PageRepository</parameter>
         <parameter key="gitwiki.repository.dir">%kernel.root_dir%/wiki</parameter>
         <parameter key="gitwiki.repository.debug">false</parameter>
         <parameter key="gitwiki.repository.executable">command git</parameter>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Form;
+namespace Git\WikiBundle\Form;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextareaField;

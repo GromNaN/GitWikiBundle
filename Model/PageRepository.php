@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Model;
+namespace Git\WikiBundle\Model;
 
-use Git\Repository;
+use Git\Core\Repository;
 use Symfony\Component\Finder\Finder;
 
 class PageRepository extends Repository

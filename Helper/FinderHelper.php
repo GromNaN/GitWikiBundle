@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Helper;
+namespace Git\WikiBundle\Helper;
 
 /**
  * FinderHelper format
@@ -27,7 +27,7 @@ class FinderHelper extends Helper
      *
      * @param Finder $finder
      * @param type $base
-     * @return array 
+     * @return array
      */
     public function tree(Finder $finder, $base = '/')
     {

@@ -1,16 +1,15 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Tests\DependencyInjection;
+namespace Git\WikiBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Bundle\GitWikiBundle\DependencyInjection\GitWikiExtension;
 use Symfony\Component\Yaml\Parser;
+use Git\WikiBundle\DependencyInjection\GitWikiExtension;
 
 class GitWikiExtensionTest extends \PHPUnit_Framework_TestCase
 {
 
     protected $configuration;
 
+    // Not yet implemented
 }
-
-?>

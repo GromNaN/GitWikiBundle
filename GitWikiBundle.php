@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GitWikiBundle;
+namespace Git\WikiBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;

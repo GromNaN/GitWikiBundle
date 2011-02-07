@@ -1,11 +1,11 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Controller;
+namespace Git\WikiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Bundle\GitWikiBundle\Model\Edition;
-use Bundle\GitWikiBundle\Form\EditForm;
+use Git\WikiBundle\Model\Edition;
+use Git\WikiBundle\Form\EditForm;
 
 class WikiController extends Controller
 {

@@ -6,9 +6,9 @@
 
     <parameters>
         <!-- Controllers -->
-        <parameter key="gitwiki.controller.wiki.class">Bundle\GitWikiBundle\Controller\WikiController</parameter>
-        <parameter key="gitwiki.controller.page.class">Bundle\GitWikiBundle\Controller\PageController</parameter>
-        
+        <parameter key="gitwiki.controller.wiki.class">Git\WikiBundle\Controller\WikiController</parameter>
+        <parameter key="gitwiki.controller.page.class">Git\WikiBundle\Controller\PageController</parameter>
+
         <!-- Default pages -->
         <parameter key="gitwiki.page.index">index.rst</parameter>
     </parameters>

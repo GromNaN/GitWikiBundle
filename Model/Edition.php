@@ -1,31 +1,33 @@
 <?php
 
-namespace Bundle\GitWikiBundle\Model;
+namespace Git\WikiBundle\Model;
+
+use Git\Core\User;
 
 class Edition
 {
     /**
      * Message description of the commit
-     * 
+     *
      * @var string
      */
     protected $message;
     /**
      * Edited page (file)
-     * 
+     *
      * @var Page
      */
     protected $page;
     /**
      *
-     * @var Git\User
+     * @var Git\Core\User
      */
     protected $gitUser;
 
     function __construct($page)
     {
         $this->page = $page;
-        $this->gitUser = new \Git\User('', '');
+        $this->gitUser = new User('', '');
     }
 
     public function getMessage()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\GitWikiBundle\DependencyInjection;
+namespace Git\WikiBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,6 +26,10 @@ class GitWikiExtension extends Extension
         if (!empty($config['executable'])) {
             $container->setParameter('gitwiki.repository.executable', $config['executable']);
         }
+        if (!empty($config['index'])) {
+            $container->setParameter('gitwiki.page.index', $config['index']);
+        }
+
 
         // Views
         if (!empty($config['views'])) {
@@ -42,7 +46,7 @@ class GitWikiExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://www.symfony-project.org/shemas/dic/symfony/gitwiki';
+        return 'https://www.symfony-project.org/shemas/dic/symfony/gitwiki';
     }
 
     /**
