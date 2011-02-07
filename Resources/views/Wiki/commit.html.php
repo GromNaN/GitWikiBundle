@@ -2,7 +2,7 @@
 /**
  * @var string $commit
  */
-$view->extend('GitWikiBundle::layout.php.html');
+$view->extend('GitWikiBundle::layout.html.php');
 ?>
 
 <div class="git-commit-infos">
@@ -14,4 +14,4 @@ $view->extend('GitWikiBundle::layout.php.html');
 </div>
 
 
-<?php echo $view->render('GitWikiBundle:Blocks:diff.php.html', array('diff' => $diff)) ?>
+<?php echo $view->render('GitWikiBundle:Blocks:diff.html.php', array('diff' => $diff)) ?>
