@@ -59,18 +59,19 @@ class PageController extends Controller
 //            throw new NotFoundHttpException(sprintf('"%s" is not writable.', $name));
 //        }
 
-        $form = new EditionForm('gitwiki', new Edition($page), $this->get('validator'));
+        $form = $this->get('gitwiki.form.edition');
 
-        if ('POST' === $this->get('request')->getMethod()) {
-            $form->bind($this->get('request')->request->get($form->getName()));
-//            $form->get
+//        $form = new EditionForm('gitwiki', array(
+//            'validator' => $this->get('validator'),
+//            'validation_groups' => 'Edition',
+//          ));
+        $form->bind($this->get('request'), new Edition($page));
 
-            if ($form->isValid()) {
-                $page->save();
-                $page->commit($form->getData()->getMessage(), $form->getData()->getGitUser());
+        if ($form->isValid()) {
+            $page->save();
+            $page->commit($form->getData()->getMessage(), $form->getData()->getAuthor());
 
-                return $this->redirect(str_replace('%2F', '/', $this->get('router')->generate('gitwiki.page.view', array('name' => $name))));
-            }
+            return $this->redirect(str_replace('%2F', '/', $this->get('router')->generate('gitwiki.page.view', array('name' => $name))));
         }
 
         return $this->render($this->getView('edit'), array(

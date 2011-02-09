@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://www.symfony-project.org/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="gitwiki.form.edition.class">Git\WikiBundle\Form\EditionForm</parameter>
+        <parameter key="gitwiki.form.edition.name">gitwiki_edit</parameter>
+        <parameter key="gitwiki.form.edition.validation_groups" type="collection">
+            <parameter>Edition</parameter>
+            <parameter>GitUser</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+
+        <service id="gitwiki.form.edition" factory-method="create" factory-class="%gitwiki.form.edition.class%" class="%gitwiki.form.edition.class%">
+            <argument type="service" id="form.context" />
+            <argument>%gitwiki.form.edition.name%</argument>
+            <argument type="collection">
+                <argument key="validation_groups">%gitwiki.form.edition.validation_groups%</argument>
+            </argument>
+        </service>
+
+    </services>
+
+</container>

@@ -5,7 +5,7 @@ namespace Git\WikiBundle\Form;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;
 
-class GitUserForm extends Form
+class AuthorForm extends Form
 {
     public function configure()
     {

@@ -8,56 +8,76 @@ class Edition
 {
     /**
      * Message description of the commit
-     *
+     * 
      * @var string
      */
     protected $message;
+
     /**
      * Edited page (file)
      *
      * @var Page
      */
     protected $page;
+
     /**
+     * Modifications author
      *
      * @var Git\Core\User
      */
-    protected $gitUser;
+    protected $author;
 
-    function __construct($page)
+    function __construct(Page $page, User $author = null)
     {
         $this->page = $page;
-        $this->gitUser = new User('', '');
+        $this->author = $author ?: new User('', ''); // Must be initialized to be bound.
     }
 
+    /**
+     * @return string
+     */
     public function getMessage()
     {
         return $this->message;
     }
 
+    /**
+     * @param string
+     */
     public function setMessage($message)
     {
         $this->message = $message;
     }
 
+    /**
+     * @return Page
+     */
     public function getPage()
     {
         return $this->page;
     }
 
-    public function setPage($page)
+    /**
+     * @param Page $page
+     */
+    public function setPage(Page $page)
     {
         $this->page = $page;
     }
 
-    public function getGitUser()
+    /**
+     * @return User
+     */
+    public function getAuthor()
     {
-        return $this->gitUser;
+        return $this->author;
     }
 
-    public function setGitUser($gitUser)
+    /**
+     * @param User $author
+     */
+    public function setAuthor(User $user)
     {
-        $this->gitUser = $gitUser;
+        $this->author = $author;
     }
-
 }

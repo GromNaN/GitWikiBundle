@@ -15,6 +15,7 @@ class GitWikiExtension extends Extension
         $loader->load('wiki.xml');
         $loader->load('git.xml');
         $loader->load('views.xml');
+        $loader->load('form.xml');
 
         // Git Repository
         if (!empty($config['dir'])) {
