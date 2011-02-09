@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of the GitWikiBundle.
+ *
+ * (c) Jérôme Tamarelle <jerome@tamarelle.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Git\WikiBundle\Helper;
 
 /**
- * FinderHelper format
+ * FinderHelper
  *
  * @author Jérôme Tamarelle <jerome@tamarelle.net>
  */
@@ -24,7 +33,6 @@ class FinderHelper extends Helper
     }
 
     /**
-     *
      * @param Finder $finder
      * @param type $base
      * @return array
@@ -32,12 +40,11 @@ class FinderHelper extends Helper
     public function tree(Finder $finder, $base = '/')
     {
         $tree = array();
-        foreach($finder as $file) {
+        foreach ($finder as $file) {
             $path = explode('/', $file->getPathname());
             $current = $tree;
-            while($path_step = next($path))
-            {
-                if(!isset($current[$path_step])) {
+            while ($path_step = next($path)) {
+                if (!isset($current[$path_step])) {
                     $current[$path_step] = array();
                 }
             }
@@ -46,4 +53,5 @@ class FinderHelper extends Helper
 
         return $tree;
     }
+
 }

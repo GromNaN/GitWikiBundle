@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the GitWikiBundle.
+ *
+ * (c) Jérôme Tamarelle <jerome@tamarelle.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Git\WikiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -7,13 +16,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Git\WikiBundle\Model\Edition;
 use Git\WikiBundle\Form\EditForm;
 
+/**
+ * Wiki repository related controller.
+ *
+ * @author Jérôme Tamarelle <jerome@tamarelle.net>
+ */
 class WikiController extends Controller
 {
 
     /**
      * Redirect to homepage
      *
-     * @Route(
+     * @route /
      */
     public function indexAction()
     {
@@ -96,11 +110,9 @@ class WikiController extends Controller
 
             if (isset($hashes[0])) {
                 if (isset($hashes[1])) {
-                    return $this->redirect($this->getRoute('wiki.compare2',
-                            array('hash1' => $hashes[1], 'hash2' => $hashes[0])));
+                    return $this->redirect($this->getRoute('wiki.compare2', array('hash1' => $hashes[1], 'hash2' => $hashes[0])));
                 } else {
-                    return $this->redirect($this->getRoute('wiki.compare1',
-                            array('hash1' => $hashes[0])));
+                    return $this->redirect($this->getRoute('wiki.compare1', array('hash1' => $hashes[0])));
                 }
             }
         }
@@ -143,10 +155,11 @@ class WikiController extends Controller
     }
 
     /**
-     * @return Bundle\GitWikiBundle\Model\PageRepository
+     * @return Git\WikiBundle\Model\PageRepository
      */
     protected function getRepository()
     {
         return $this->container->get('gitwiki.repository');
     }
+
 }

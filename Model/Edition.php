@@ -1,18 +1,33 @@
 <?php
 
+/*
+ * This file is part of the GitWikiBundle.
+ *
+ * (c) Jérôme Tamarelle <jerome@tamarelle.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Git\WikiBundle\Model;
 
 use Git\Core\User;
 
+/**
+ * Page edition model.
+ *
+ * @author Jérôme Tamarelle <jerome@tamarelle.net>
+ */
 class Edition
 {
+
     /**
      * Message description of the commit
-     * 
+     *
      * @var string
      */
-    protected $message;
 
+    protected $message;
     /**
      * Edited page (file)
      *
@@ -30,7 +45,7 @@ class Edition
     function __construct(Page $page, User $author = null)
     {
         $this->page = $page;
-        $this->author = $author ?: new User('', ''); // Must be initialized to be bound.
+        $this->author = $author ? : new User('', ''); // Must be initialized to be bound.
     }
 
     /**
@@ -80,4 +95,5 @@ class Edition
     {
         $this->author = $author;
     }
+
 }

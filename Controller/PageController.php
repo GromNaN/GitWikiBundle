@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the GitWikiBundle.
+ *
+ * (c) Jérôme Tamarelle <jerome@tamarelle.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Git\WikiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -7,6 +16,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Git\WikiBundle\Model\Edition;
 use Git\WikiBundle\Form\EditionForm;
 
+/**
+ * Wiki pages related controller.
+ *
+ * @author Jérôme Tamarelle <jerome@tamarelle.net>
+ */
 class PageController extends Controller
 {
 
@@ -55,16 +69,10 @@ class PageController extends Controller
         }
 
 //        if (!$page->isWritable()) {
-//            var_dump($page->getPathname());
 //            throw new NotFoundHttpException(sprintf('"%s" is not writable.', $name));
 //        }
 
         $form = $this->get('gitwiki.form.edition');
-
-//        $form = new EditionForm('gitwiki', array(
-//            'validator' => $this->get('validator'),
-//            'validation_groups' => 'Edition',
-//          ));
         $form->bind($this->get('request'), new Edition($page));
 
         if ($form->isValid()) {
@@ -131,11 +139,9 @@ class PageController extends Controller
 
             if (isset($hashes[0])) {
                 if (isset($hashes[1])) {
-                    return $this->redirect($this->getRoute('page.compare2',
-                            array('name' => $name, 'hash1' => $hashes[1], 'hash2' => $hashes[0])));
+                    return $this->redirect($this->getRoute('page.compare2', array('name' => $name, 'hash1' => $hashes[1], 'hash2' => $hashes[0])));
                 } else {
-                    return $this->redirect($this->getRoute('page.compare1',
-                            array('name' => $name, 'hash1' => $hashes[0])));
+                    return $this->redirect($this->getRoute('page.compare1', array('name' => $name, 'hash1' => $hashes[0])));
                 }
             }
         }
@@ -152,7 +158,7 @@ class PageController extends Controller
     {
         $page = $this->getPage($name);
 
-        if($page->isNew() || $page->isDir()) {
+        if ($page->isNew() || $page->isDir()) {
             throw new NotFoundHttpException(sprintf('File "%s" does not exist.', $name));
         }
 
@@ -183,7 +189,7 @@ class PageController extends Controller
     }
 
     /**
-     * @return Bundle\GitWikiBundle\Model\Page
+     * @return Git\WikiBundle\Model\Page
      */
     protected function getPage($name)
     {
