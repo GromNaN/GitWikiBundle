@@ -22,7 +22,7 @@ $view->extend('GitWikiBundle:Page:layout.html.php');
                     <td class="commit-name">
                         <em><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?>: </em>
                         <?php echo $commit->getMessage() ?> 
-                        [<a href="<?php echo $view['router']->generate('gitwiki.page.compare1', array('name' => $page->getFilename(), 'hash1' => $commit->getHash())) ?>" title="View diff"><?php echo $commit->getHash() ?></a>]
+                        [<a href="<?php echo $view['router']->generate('gitwiki.wiki.commit', array('hash' => $commit->getHash())) ?>" title="View diff"><?php echo $commit->getHash() ?></a>]
                     </td>
                 </tr>
             <?php endforeach ?>
