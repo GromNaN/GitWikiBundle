@@ -30,7 +30,7 @@
                 <option name="groups">GitUser</option>
             </constraint>
         </property>
-        <property name="name">
+        <property name="email">
             <constraint name="NotBlank">
                 <option name="message">Please enter your email.</option>
                 <option name="groups">GitUser</option>
