@@ -2,7 +2,7 @@
 /**
  * @var string $diff
  */
-$view->extend('GitWikiBundle::layout.php.html');
+$view->extend('GitWikiBundle::layout.html.php');
 ?>
 
 <pre>

@@ -5,16 +5,19 @@ namespace Bundle\GitWikiBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\FileLocator;
 
 class GitWikiExtension extends Extension
 {
 
     public function configLoad($config, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('wiki.xml');
         $loader->load('git.xml');
         $loader->load('views.xml');
+
+        $config = $config[0];
 
         // Git Repository
         if (!empty($config['dir'])) {

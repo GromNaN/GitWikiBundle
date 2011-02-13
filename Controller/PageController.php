@@ -40,11 +40,11 @@ class PageController extends Controller
     public function editAction($name)
     {
         $page = $this->container->get('gitwiki.repository')->getPage($name);
-        $form = new EditForm('gitwiki', new Edition($page), $this->get('validator'));
+        $form = EditForm::create($this->get('form.context'), 'gitwiki');
+
+        $form->bind($this->get('request'), new Edition($page));
 
         if ('POST' === $this->get('request')->getMethod()) {
-            $form->bind($this->get('request')->request->get($form->getName()));
-
             if ($form->isValid()) {
                 $page->save($form->getData()->getMessage());
 

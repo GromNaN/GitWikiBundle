@@ -1,4 +1,4 @@
-<?php $view->extend('GitWikiBundle:Page:layout.php.html') ?>
+<?php $view->extend('GitWikiBundle:Page:layout.html.php') ?>
 
 <div id="wiki-head">
     <h1><?php echo $page->getTitle() ?></h1>

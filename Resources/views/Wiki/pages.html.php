@@ -2,7 +2,7 @@
 /**
  * @var  Finder  $pages  List of pages in the wiki
  */
-$view->extend('GitWikiBundle::layout.php.html');
+$view->extend('GitWikiBundle::layout.html.php');
 ?>
 
 
