@@ -12,7 +12,7 @@ Download source and dependencies:
 ::
 
     git submodule add git://github.com/GromNaN/GitWikiBundle.git src/Bundle/GromNaN/GitWikiBundle
-    git submodule add git://github.com/GromNaN/php-git-repo.git src/Bundle/GromNaN/php-git-repo
+    git submodule add git://github.com/GromNaN/GitCore.git src/Bundle/GromNaN/php-git-repo
 
 Enable the bundle in your application kernel.
 
@@ -54,7 +54,7 @@ DI parameters
     # app/config/config.yml
     gitwiki.config: ~
 
-Alternativement, for advanced configuration, the available parameters are:
+For advanced configuration, the available parameters are:
 
 ::
 
