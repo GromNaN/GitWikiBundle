@@ -6,22 +6,25 @@
 
     <parameters>
         <!-- Controllers -->
-        <parameter key="gitwiki.controller.wiki.class">Git\WikiBundle\Controller\WikiController</parameter>
-        <parameter key="gitwiki.controller.page.class">Git\WikiBundle\Controller\PageController</parameter>
+        <parameter key="git_wiki.controller.wiki.class">Git\WikiBundle\Controller\WikiController</parameter>
+        <parameter key="git_wiki.controller.page.class">Git\WikiBundle\Controller\PageController</parameter>
 
         <!-- Default pages -->
-        <parameter key="gitwiki.page.index">index.rst</parameter>
+        <parameter key="git_wiki.page.index">index.rst</parameter>
+
+        <!-- Events -->
+        <parameter key="git_wiki.filter.event_name">git_wiki.filter_contents</parameter>
     </parameters>
 
     <services>
         <!-- Controllers -->
-        <service id="gitwiki.controller.wiki" class="%gitwiki.controller.wiki.class%">
+        <service id="git_wiki.controller.wiki" class="%git_wiki.controller.wiki.class%">
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
         </service>
 
-        <service id="gitwiki.controller.page" class="%gitwiki.controller.page.class%">
+        <service id="git_wiki.controller.page" class="%git_wiki.controller.page.class%">
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>

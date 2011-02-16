@@ -9,16 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Git\WikiBundle;
+namespace Git\WikiBundle\Filter;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
- * GitWikiBundle.
+ * Generate internal links.
  *
  * @author Jérôme Tamarelle <jerome@tamarelle.net>
  */
-class GitWikiBundle extends Bundle
+class InternalLinksFilter extends BaseFilter
 {
-    
+
+    protected function doFilter($contents)
+    {
+        // @todo 
+
+        return $contents;
+    }
+
 }

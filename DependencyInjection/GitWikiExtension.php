@@ -14,6 +14,7 @@ namespace Git\WikiBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 /**
  * Loads wiki configuration.
@@ -23,34 +24,55 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 class GitWikiExtension extends Extension
 {
 
-    public function configLoad($config, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $configuration)
     {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+        $loader = new XmlFileLoader($configuration, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('wiki.xml');
         $loader->load('git.xml');
         $loader->load('views.xml');
         $loader->load('form.xml');
 
-        // Git Repository
-        if (!empty($config['dir'])) {
-            $container->setParameter('gitwiki.repository.dir', $config['dir']);
-        }
-        if (!empty($config['debug'])) {
-            $container->setParameter('gitwiki.repository.debug', $config['debug']);
-        }
-        if (!empty($config['executable'])) {
-            $container->setParameter('gitwiki.repository.executable', $config['executable']);
-        }
-        if (!empty($config['index'])) {
-            $container->setParameter('gitwiki.page.index', $config['index']);
-        }
-
-
         // Views
         if (!empty($config['views'])) {
             foreach ($config['views'] as $key => $value) {
-                $container->setParameter('gitwiki.views.'.$key, $value);
+                $container->setParameter('git_wiki.views.'.$key, $value);
             }
+        }
+
+        foreach($config as $env_config) {
+            $this->loadConfig($env_config, $configuration);
+            $this->loadFilter($env_config, $configuration);
+        }
+    }
+
+    protected function loadConfig(array $config, ContainerBuilder $configuration)
+    {
+        // Git Repository
+        if (!empty($config['dir'])) {
+            $configuration->setParameter('git_wiki.repository.dir', $config['dir']);
+        }
+        if (!empty($config['debug'])) {
+            $configuration->setParameter('git_wiki.repository.debug', $config['debug']);
+        }
+        if (!empty($config['executable'])) {
+            $configuration->setParameter('git_wiki.repository.executable', $config['executable']);
+        }
+        if (!empty($config['index'])) {
+            $configuration->setParameter('git_wiki.page.index', $config['index']);
+        }
+    }
+
+    public function loadFilter($config, ContainerBuilder $configuration)
+    {
+        if(empty($config['filter'])) return;
+
+        $loader = new XmlFileLoader($configuration, new FileLocator(__DIR__.'/../Resources/config/filter'));
+
+        foreach($config['filter'] as $name => $options) {
+            if(!$configuration->hasDefinition('git_wiki.filter.'.$name)) {
+                $loader->load($name.'.xml');
+            }
+            // @todo Load options.
         }
     }
 
@@ -61,7 +83,7 @@ class GitWikiExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'https://www.symfony-project.org/shemas/dic/symfony/gitwiki';
+        return 'https://www.symfony-project.org/shemas/dic/symfony/git_wiki';
     }
 
     /**
@@ -83,7 +105,7 @@ class GitWikiExtension extends Extension
      */
     public function getAlias()
     {
-        return 'gitwiki';
+        return 'git_wiki';
     }
 
 }

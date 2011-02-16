@@ -12,6 +12,7 @@
 namespace Git\WikiBundle\Model;
 
 use Git\Core\File;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Wiki page model.
@@ -20,6 +21,11 @@ use Git\Core\File;
  */
 class Page extends File
 {
+
+    /**
+     * @var string
+     */
+    protected $format;
 
     /**
      * @var Git\Commit
@@ -32,19 +38,6 @@ class Page extends File
     }
 
     /**
-     * Convert file content to HTML using the format parser.
-     *
-     * @todo Implement rendering
-     * @return string The rendered page content.
-     */
-    public function render()
-    {
-        return '<pre>'.\htmlentities($this->getContents()).'</pre>';
-        //return $this->getContent();
-        //return $this->container['markdownParser']->transform($this->getContent());
-    }
-
-    /**
      * Deduct the file format from its extension.
      * If the file does not have any extension, null is returned.
      *
@@ -52,11 +45,15 @@ class Page extends File
      */
     public function getFormat()
     {
-        if (preg_match('/\.([:alnum:]+)$/', $this->getFilename(), $matches)) {
-            return $matches[0];
-        } else {
-            return null;
+        if (null === $this->format) {
+            if (preg_match('/\.([:alnum:]+)$/', $this->getFilename(), $matches)) {
+                $this->format = $matches[0];
+            } else {
+                $this->format = '';
+            }
         }
+
+        return $this->format;
     }
 
     /**

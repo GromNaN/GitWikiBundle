@@ -31,7 +31,7 @@ class WikiController extends Controller
      */
     public function indexAction()
     {
-        $name = $this->container->getParameter('gitwiki.page.index');
+        $name = $this->container->getParameter('git_wiki.page.index');
         $uri = $this->getRoute('page.view', array('name' => $name));
         return $this->redirect($uri);
     }
@@ -139,7 +139,7 @@ class WikiController extends Controller
      */
     protected function getView($name)
     {
-        return $this->container->getParameter('gitwiki.views.wiki.'.$name);
+        return $this->container->getParameter('git_wiki.views.wiki.'.$name);
     }
 
     /**
@@ -151,7 +151,7 @@ class WikiController extends Controller
      */
     protected function getRoute($name, array $parameters = array())
     {
-        return $this->get('router')->generate('gitwiki.'.$name, $parameters);
+        return $this->get('router')->generate('git_wiki.'.$name, $parameters);
     }
 
     /**
@@ -159,7 +159,7 @@ class WikiController extends Controller
      */
     protected function getRepository()
     {
-        return $this->container->get('gitwiki.repository');
+        return $this->container->get('git_wiki.repository');
     }
 
 }

@@ -16,7 +16,7 @@ $iterator = new RecursiveDirectoryIterator($path);
         <?php echo $child->getFilename() ?>
         <?php echo $view->render('GitWikiBundle:Blocks:filetree.html.php', array('path' => $child->getPathname(), 'parent' => $parent.$child->getFilename().'/')) ?>
         <?php else: ?>
-        <a href="<?php echo str_replace('%2F', '/', $view['router']->generate('gitwiki.page.view', array('name' => $parent.$child->getFilename()))) ?>" title="View this page"><?php echo $child->getFilename() ?></a>
+        <a href="<?php echo str_replace('%2F', '/', $view['router']->generate('git_wiki.page.view', array('name' => $parent.$child->getFilename()))) ?>" title="View this page"><?php echo $child->getFilename() ?></a>
         <?php endif ?>
     </li>
     <?php endforeach ?>

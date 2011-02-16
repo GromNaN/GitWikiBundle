@@ -4,82 +4,82 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-    <route id="gitwiki.wiki.home" pattern="/">
-        <default key="_controller">gitwiki.controller.wiki:indexAction</default>
+    <route id="git_wiki.wiki.home" pattern="/">
+        <default key="_controller">git_wiki.controller.wiki:indexAction</default>
     </route>
 
-    <route id="gitwiki.wiki.pages" pattern="/_pages">
-        <default key="_controller">gitwiki.controller.wiki:pagesAction</default>
+    <route id="git_wiki.wiki.pages" pattern="/_pages">
+        <default key="_controller">git_wiki.controller.wiki:pagesAction</default>
     </route>
 
-    <route id="gitwiki.wiki.history" pattern="/_history">
-        <default key="_controller">gitwiki.controller.wiki:historyAction</default>
+    <route id="git_wiki.wiki.history" pattern="/_history">
+        <default key="_controller">git_wiki.controller.wiki:historyAction</default>
     </route>
 
-    <route id="gitwiki.wiki.commit" pattern="/_commit/{hash}">
-        <default key="_controller">gitwiki.controller.wiki:commitAction</default>
+    <route id="git_wiki.wiki.commit" pattern="/_commit/{hash}">
+        <default key="_controller">git_wiki.controller.wiki:commitAction</default>
         <requirement key="hash">[0-9a-f]{40}</requirement>
     </route>
 
-    <route id="gitwiki.wiki.compare" pattern="/_compare">
-        <default key="_controller">gitwiki.controller.wiki:compareRedirectAction</default>
+    <route id="git_wiki.wiki.compare" pattern="/_compare">
+        <default key="_controller">git_wiki.controller.wiki:compareRedirectAction</default>
     </route>
 
-    <route id="gitwiki.wiki.compare1" pattern="/_compare/{hash1}">
-        <default key="_controller">gitwiki.controller.wiki:compareAction</default>
+    <route id="git_wiki.wiki.compare1" pattern="/_compare/{hash1}">
+        <default key="_controller">git_wiki.controller.wiki:compareAction</default>
         <requirement key="hash1">[0-9a-f]{40}</requirement>
     </route>
 
-    <route id="gitwiki.wiki.compare2" pattern="/_compare/{hash1}...{hash2}">
-        <default key="_controller">gitwiki.controller.wiki:compareAction</default>
-        <requirement key="hash1">[0-9a-f]{40}</requirement>
-        <requirement key="hash2">[0-9a-f]{40}</requirement>
-    </route>
-
-    <route id="gitwiki.wiki.search" pattern="/_search">
-        <default key="_controller">gitwiki.controller.wiki:searchAction</default>
-    </route>
-
-    <route id="gitwiki.page.raw" pattern="/_raw/{name}">
-        <default key="_controller">gitwiki.controller.page:rawAction</default>
-        <requirement key="name">[^_].*</requirement>
-    </route>
-
-    <route id="gitwiki.page.edit" pattern="/{name}/_edit">
-        <default key="_controller">gitwiki.controller.page:editAction</default>
-        <requirement key="name">[^_].*</requirement>
-    </route>
-
-    <route id="gitwiki.page.history" pattern="/{name}/_history">
-        <default key="_controller">gitwiki.controller.page:historyAction</default>
-        <requirement key="name">[^_].*</requirement>
-    </route>
-
-    <route id="gitwiki.page.compare" pattern="/{name}/_compare">
-        <default key="_controller">gitwiki.controller.page:compareRedirectAction</default>
-        <requirement key="name">[^_].*</requirement>
-    </route>
-
-    <route id="gitwiki.page.compare1" pattern="/{name}/_compare/{hash1}">
-        <default key="_controller">gitwiki.controller.page:compareAction</default>
-        <requirement key="name">[^_].*</requirement>
-        <requirement key="hash1">[0-9a-f]{40}</requirement>
-    </route>
-
-    <route id="gitwiki.page.compare2" pattern="/{name}/_compare/{hash1}...{hash2}">
-        <default key="_controller">gitwiki.controller.page:compareAction</default>
-        <requirement key="name">[^_].*</requirement>
+    <route id="git_wiki.wiki.compare2" pattern="/_compare/{hash1}...{hash2}">
+        <default key="_controller">git_wiki.controller.wiki:compareAction</default>
         <requirement key="hash1">[0-9a-f]{40}</requirement>
         <requirement key="hash2">[0-9a-f]{40}</requirement>
     </route>
 
-    <route id="gitwiki.page.view" pattern="/{name}">
-        <default key="_controller">gitwiki.controller.page:viewAction</default>
+    <route id="git_wiki.wiki.search" pattern="/_search">
+        <default key="_controller">git_wiki.controller.wiki:searchAction</default>
+    </route>
+
+    <route id="git_wiki.page.raw" pattern="/_raw/{name}">
+        <default key="_controller">git_wiki.controller.page:rawAction</default>
         <requirement key="name">[^_].*</requirement>
     </route>
 
-    <route id="gitwiki.page.view_version" pattern="/{name}/{commit}">
-        <default key="_controller">gitwiki.controller.page:viewAction</default>
+    <route id="git_wiki.page.edit" pattern="/{name}/_edit">
+        <default key="_controller">git_wiki.controller.page:editAction</default>
+        <requirement key="name">[^_].*</requirement>
+    </route>
+
+    <route id="git_wiki.page.history" pattern="/{name}/_history">
+        <default key="_controller">git_wiki.controller.page:historyAction</default>
+        <requirement key="name">[^_].*</requirement>
+    </route>
+
+    <route id="git_wiki.page.compare" pattern="/{name}/_compare">
+        <default key="_controller">git_wiki.controller.page:compareRedirectAction</default>
+        <requirement key="name">[^_].*</requirement>
+    </route>
+
+    <route id="git_wiki.page.compare1" pattern="/{name}/_compare/{hash1}">
+        <default key="_controller">git_wiki.controller.page:compareAction</default>
+        <requirement key="name">[^_].*</requirement>
+        <requirement key="hash1">[0-9a-f]{40}</requirement>
+    </route>
+
+    <route id="git_wiki.page.compare2" pattern="/{name}/_compare/{hash1}...{hash2}">
+        <default key="_controller">git_wiki.controller.page:compareAction</default>
+        <requirement key="name">[^_].*</requirement>
+        <requirement key="hash1">[0-9a-f]{40}</requirement>
+        <requirement key="hash2">[0-9a-f]{40}</requirement>
+    </route>
+
+    <route id="git_wiki.page.view" pattern="/{name}">
+        <default key="_controller">git_wiki.controller.page:viewAction</default>
+        <requirement key="name">[^_].*</requirement>
+    </route>
+
+    <route id="git_wiki.page.view_version" pattern="/{name}/{commit}">
+        <default key="_controller">git_wiki.controller.page:viewAction</default>
         <requirement key="name">[^_].*</requirement>
     </route>
 </routes>

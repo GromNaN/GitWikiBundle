@@ -12,6 +12,7 @@
 namespace Git\WikiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Git\WikiBundle\Model\Edition;
 use Git\WikiBundle\Form\EditionForm;
@@ -38,7 +39,8 @@ class PageController extends Controller
         $page = $this->getPage($name);
 
         if (!$page->exists()) {
-            return $this->redirect(str_replace('%2F', '/', $this->get('router')->generate('gitwiki.page.edit', array('name' => $name))));
+            return $this->redirect($this->get('router')->generate('git_wiki.page.edit', array('name' => $name)));
+            return $response;
         }
 
         if ($page->isDir()) {
@@ -49,8 +51,12 @@ class PageController extends Controller
             throw new NotFoundHttpException(sprintf('"%s" is not readable.', $name));
         }
 
-        return $this->render($this->getView('view'), array(
+        $event = new Event($page, $this->container->getParameter('git_wiki.filter.event_name'), array('container' => $this->container));
+        $contents = $this->get('event_dispatcher')->filter($event, $page->getContents());
+
+        return $this->renderView('view', array(
             'page' => $page,
+            'contents' => $contents,
         ));
     }
 
@@ -72,17 +78,16 @@ class PageController extends Controller
 //            throw new NotFoundHttpException(sprintf('"%s" is not writable.', $name));
 //        }
 
-        $form = $this->get('gitwiki.form.edition');
+        $form = $this->get('git_wiki.form.edition');
         $form->bind($this->get('request'), new Edition($page));
 
         if ($form->isValid()) {
-            $page->save();
             $page->commit($form->getData()->getMessage(), $form->getData()->getAuthor());
 
-            return $this->redirect(str_replace('%2F', '/', $this->get('router')->generate('gitwiki.page.view', array('name' => $name))));
+            return $this->redirect($this->get('router')->generate('git_wiki.page.view', array('name' => $name)));
         }
 
-        return $this->render($this->getView('edit'), array(
+        return $this->renderView('edit', array(
             'page' => $page,
             'form' => $form,
         ));
@@ -99,7 +104,7 @@ class PageController extends Controller
         $page = $this->getPage($name);
         $commits = $page->log(10);
 
-        return $this->render($this->getView('history'), array(
+        return $this->renderView('history', array(
             'page' => $page,
             'commits' => $commits,
         ));
@@ -119,7 +124,7 @@ class PageController extends Controller
         $page = $this->getPage($name);
         $diff = $page->diff(3, $hash1, $hash2);
 
-        return $this->render($this->getView('compare'), array(
+        return $this->renderView('compare', array(
             'page' => $page,
             'diff' => $diff,
         ));
@@ -166,14 +171,18 @@ class PageController extends Controller
     }
 
     /**
-     * Get the configured view.
+     * Renders a view.
      *
-     * @param string $name The view name
-     * @return string The view path name from DI parameters.
+     * @param string   $view The view name
+     * @param array    $parameters An array of parameters to pass to the view
+     * @param Response $response A response instance
+     *
+     * @return Response A Response instance
      */
-    protected function getView($name)
+    public function renderView($view, array $parameters = array(), Response $response = null)
     {
-        return $this->container->getParameter('gitwiki.views.page.'.$name);
+        return $this->get('templating')->renderResponse(
+          $this->container->getParameter('git_wiki.views.page.'.$view), $parameters, $response);
     }
 
     /**
@@ -185,7 +194,7 @@ class PageController extends Controller
      */
     protected function getRoute($name, array $parameters = array())
     {
-        return $this->get('router')->generate('gitwiki.'.$name, $parameters);
+        return $this->container->get('router')->generate('git_wiki.'.$name, $parameters);
     }
 
     /**
@@ -193,7 +202,8 @@ class PageController extends Controller
      */
     protected function getPage($name)
     {
-        return $this->container->get('gitwiki.repository')->getPage($name);
+        $name = urldecode($name); // Route escaper makes this parameter invalid.
+        return $this->container->get('git_wiki.repository')->getPage($name);
     }
 
 }

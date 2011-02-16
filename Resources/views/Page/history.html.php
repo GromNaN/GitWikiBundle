@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
  * @var  array  $commits  List of commits to display
  */
 $view->extend('GitWikiBundle:Page:layout.html.php');
 ?>
 
-<form id="versions-form" method="post" action="<?php echo $view['router']->generate('gitwiki.page.compare', array('name' => $page->getFilename())) ?>"> 
+<form id="versions-form" method="post" action="<?php echo $view['router']->generate('git_wiki.page.compare', array('name' => $page->getFilename())) ?>">
     <input class="action-compare-versions" type="submit" value="Compare Revisions" />
     <table>
         <tbody>
@@ -21,8 +21,8 @@ $view->extend('GitWikiBundle:Page:layout.html.php');
                     </td>
                     <td class="commit-name">
                         <em><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?>: </em>
-                        <?php echo $commit->getMessage() ?> 
-                        [<a href="<?php echo $view['router']->generate('gitwiki.wiki.commit', array('hash' => $commit->getHash())) ?>" title="View diff"><?php echo $commit->getHash() ?></a>]
+                        <?php echo $commit->getMessage() ?>
+                        [<a href="<?php echo $view['router']->generate('git_wiki.wiki.commit', array('hash' => $commit->getHash())) ?>" title="View diff"><?php echo $commit->getHash() ?></a>]
                     </td>
                 </tr>
             <?php endforeach ?>

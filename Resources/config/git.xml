@@ -5,18 +5,18 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="gitwiki.repository.class">Git\WikiBundle\Model\PageRepository</parameter>
-        <parameter key="gitwiki.repository.dir">%kernel.root_dir%/wiki</parameter>
-        <parameter key="gitwiki.repository.debug">false</parameter>
-        <parameter key="gitwiki.repository.executable">command git</parameter>
+        <parameter key="git_wiki.repository.class">Git\WikiBundle\Model\PageRepository</parameter>
+        <parameter key="git_wiki.repository.dir">%kernel.root_dir%/wiki</parameter>
+        <parameter key="git_wiki.repository.debug">false</parameter>
+        <parameter key="git_wiki.repository.executable">/opt/local/bin/git</parameter>
     </parameters>
 
     <services>
-        <service id="gitwiki.repository" class="%gitwiki.repository.class%">
-          <argument>%gitwiki.repository.dir%</argument>
-          <argument>%gitwiki.repository.debug%</argument>
+        <service id="git_wiki.repository" class="%git_wiki.repository.class%">
+          <argument>%git_wiki.repository.dir%</argument>
+          <argument>%git_wiki.repository.debug%</argument>
           <argument type="collection">
-            <argument key="git_executable">%gitwiki.repository.executable%</argument>
+            <argument key="git_executable">%git_wiki.repository.executable%</argument>
           </argument>
         </service>
     </services>

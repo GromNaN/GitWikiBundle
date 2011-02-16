@@ -5,7 +5,7 @@
 $view->extend('GitWikiBundle::layout.html.php');
 ?>
 
-<form id="versions-form" method="post" action="<?php echo $view['router']->generate('gitwiki.wiki.compare') ?>"> 
+<form id="versions-form" method="post" action="<?php echo $view['router']->generate('git_wiki.wiki.compare') ?>">
     <input class="action-compare-versions" type="submit" value="Compare Revisions" />
     <table>
         <tbody>
@@ -21,11 +21,11 @@ $view->extend('GitWikiBundle::layout.html.php');
                     </td>
                     <td class="commit-name">
                         <em><?php echo $commit->getAuthoredDate()->format('Y-m-d H:i') ?>: </em>
-                        <?php echo $commit->getMessage() ?> 
+                        <?php echo $commit->getMessage() ?>
                     </td>
                     <td class="actions">
-                        <a href="<?php echo $view['router']->generate('gitwiki.wiki.commit', array('hash' => $commit->getHash())) ?>">Details</a>
-                        <a href="<?php echo $view['router']->generate('gitwiki.wiki.compare1', array('hash1' => $commit->getHash())) ?>" title="View diff">Compare to current</a>
+                        <a href="<?php echo $view['router']->generate('git_wiki.wiki.commit', array('hash' => $commit->getHash())) ?>">Details</a>
+                        <a href="<?php echo $view['router']->generate('git_wiki.wiki.compare1', array('hash1' => $commit->getHash())) ?>" title="View diff">Compare to current</a>
                     </td>
                 </tr>
             <?php endforeach ?>
