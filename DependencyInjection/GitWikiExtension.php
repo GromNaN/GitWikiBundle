@@ -10,7 +10,7 @@ use Symfony\Component\Config\FileLocator;
 class GitWikiExtension extends Extension
 {
 
-    public function configLoad($config, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('wiki.xml');
@@ -67,7 +67,7 @@ class GitWikiExtension extends Extension
      */
     public function getAlias()
     {
-        return 'gitwiki';
+        return 'git_wiki';
     }
 
 }
