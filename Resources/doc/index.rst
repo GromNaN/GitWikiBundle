@@ -11,8 +11,8 @@ Download source and dependencies:
 
 ::
 
-    git submodule add git://github.com/GromNaN/GitWikiBundle.git src/Bundle/GromNaN/GitWikiBundle
-    git submodule add git://github.com/GromNaN/php-git-repo.git src/Bundle/GromNaN/php-git-repo
+    git submodule add git://github.com/GromNaN/GitWikiBundle.git src/Git/WikiBundle
+    git submodule add git://github.com/GromNaN/GitCore.git src/Git/Core
 
 Enable the bundle in your application kernel.
 
@@ -24,7 +24,7 @@ Enable the bundle in your application kernel.
     {
         return array(
             # ...
-            new Bundle\GitWikiBundle\GitWikiBundle(),
+            new Git\WikiBundle\GitWikiBundle(),
             # ...
         );
     }
@@ -34,11 +34,11 @@ Add Git lib in the autoload file:
 
 ::
 
-    # src/autoload.php - line 21
+    # app/autoload.php - line 21
 
     $loader->registerNamespaces(array(
         # ...
-        'Git' => $vendorDir.'/php-git-repo/src',
+        'Git' => __DIR__.'/../src',
         # ...
     ));
 
@@ -52,7 +52,7 @@ DI parameters
 ::
 
     # app/config/config.yml
-    gitwiki.config: 
+    git_wiki:
         dir:        %kernel.root_dir%/wiki
         debug:      false
         executable: /usr/bin/git or "C:\Program Files\Git\git.exe"
@@ -63,14 +63,17 @@ Alternativement, for advanced configuration, the available parameters are:
 ::
 
     # app/config/config.yml
-    gitwiki.config: 
-        dir:        %kernel.root_dir%/wiki
-        debug:      false
-        executable: /usr/bin/git
+    git_wiki:
+        dir:            %kernel.root_dir%/wiki
+        debug:          false
+        executable:     /usr/bin/git
+        index:          index.rst
         views:
             view:       GitWikiBundle:Default:view.php.html
             edit:       GitWikiBundle:Default:edit.php.html
             history:    GitWikiBundle:Default:history.php.html
+        filter:
+            raw_text:   ~
 
 Git repository
 --------------
@@ -97,5 +100,6 @@ Contribute
 ==========
 
 Project hosting on https://github.com/GromNaN/GitWikiBundle
+
 
 Feel free to send pull requests !
