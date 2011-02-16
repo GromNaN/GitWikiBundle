@@ -52,14 +52,14 @@ DI parameters
 ::
 
     # app/config/config.yml
-    gitwiki.config: ~
+    git_wiki.config: ~
 
 For advanced configuration, the available parameters are:
 
 ::
 
     # app/config/config.yml
-    gitwiki.config: 
+    git_wiki.config: 
         dir:        %kernel.root_dir%/wiki
         debug:      false
         executable: /usr/bin/git
