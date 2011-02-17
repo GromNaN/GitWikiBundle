@@ -117,7 +117,8 @@ class WikiController extends Controller
             }
         }
 
-        throw new NotFoundHttpException('Invalid versions in POST data');
+        // @todo Add flash message
+        return $this->redirect($this->getRoute('wiki.history'));
     }
 
     /**
