@@ -92,7 +92,7 @@ Routing
 
     # app/config/routing.yml
     wiki:
-        resource: GitWikiBundle/Resources/config/routing.xml
+        resource: @GitWikiBundle/Resources/config/routing.xml
         prefix:   /wiki
 
 
