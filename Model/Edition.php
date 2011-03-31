@@ -11,7 +11,7 @@
 
 namespace Git\WikiBundle\Model;
 
-use Git\Core\User;
+use Git\User;
 
 /**
  * Page edition model.

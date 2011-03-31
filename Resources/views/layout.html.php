@@ -2,7 +2,7 @@
 <html>
     <head>
         <title><?php $view['slots']->output('title', 'GitWiki') ?></title>
-        <link href="<?php echo $view['assets']->getUrl('bundles/git_wiki/css/wiki.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $view['assets']->getUrl('bundles/gitwiki/css/wiki.css') ?>" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <header>

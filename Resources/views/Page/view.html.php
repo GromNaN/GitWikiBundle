@@ -1,4 +1,4 @@
-<?php $view->extend('GitWikiBundle:Page:layout.html.php') ?>
+<?php $view->extend('GitWiki:Page:layout.html.php') ?>
 
 
 <div id="wiki-body">

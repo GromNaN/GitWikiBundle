@@ -11,7 +11,7 @@
 
 namespace Git\WikiBundle\Model;
 
-use Git\Core\Repository;
+use Git\Repository;
 use Symfony\Component\Finder\Finder;
 
 /**

@@ -2,7 +2,7 @@
 /**
  * @var  array  $commits  List of commits to display
  */
-$view->extend('GitWikiBundle::layout.html.php');
+$view->extend('GitWiki::layout.html.php');
 ?>
 
 <form id="versions-form" method="post" action="<?php echo $view['router']->generate('git_wiki.wiki.compare') ?>">

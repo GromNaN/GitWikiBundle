@@ -1,4 +1,4 @@
-<?php $view->extend('GitWikiBundle:Page:layout.html.php') ?>
+<?php $view->extend('GitWiki:Page:layout.html.php') ?>
 
 <form action="#" method="post" id="wiki-edit">
     <?php echo $view['form']->render($form) ?>

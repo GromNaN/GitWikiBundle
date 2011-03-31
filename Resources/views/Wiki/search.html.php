@@ -1,5 +1,5 @@
 <?php
-$view->extend('GitWikiBundle::layout.html.php');
+$view->extend('GitWiki::layout.html.php');
 ?>
 
 TODO

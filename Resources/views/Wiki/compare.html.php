@@ -2,7 +2,7 @@
 /**
  * @var string $diff
  */
-$view->extend('GitWikiBundle::layout.html.php');
+$view->extend('GitWiki::layout.html.php');
 ?>
 
-<?php echo $view->render('GitWikiBundle:Blocks:diff.html.php', array('diff' => $diff)) ?>
+<?php echo $view->render('GitWiki:Blocks:diff.html.php', array('diff' => $diff)) ?>

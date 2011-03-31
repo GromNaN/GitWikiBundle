@@ -11,9 +11,9 @@
 
 namespace Git\WikiBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 
 /**
@@ -24,52 +24,52 @@ use Symfony\Component\Config\FileLocator;
 class GitWikiExtension extends Extension
 {
 
-    public function load(array $config, ContainerBuilder $configuration)
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($configuration, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('wiki.xml');
         $loader->load('git.xml');
         $loader->load('views.xml');
         $loader->load('form.xml');
 
         // Views
-        if (!empty($config['views'])) {
-            foreach ($config['views'] as $key => $value) {
+        if (!empty($configs['views'])) {
+            foreach ($configs['views'] as $key => $value) {
                 $container->setParameter('git_wiki.views.'.$key, $value);
             }
         }
 
-        foreach($config as $env_config) {
-            $this->loadConfig($env_config, $configuration);
-            $this->loadFilter($env_config, $configuration);
+        foreach($configs as $env_configs) {
+            $this->loadConfig($env_configs, $container);
+            $this->loadFilter($env_configs, $container);
         }
     }
 
-    protected function loadConfig(array $config, ContainerBuilder $configuration)
+    protected function loadConfig(array $configs, ContainerBuilder $container)
     {
         // Git Repository
-        if (!empty($config['dir'])) {
-            $configuration->setParameter('git_wiki.repository.dir', $config['dir']);
+        if (!empty($configs['dir'])) {
+            $container->setParameter('git_wiki.repository.dir', $configs['dir']);
         }
-        if (!empty($config['debug'])) {
-            $configuration->setParameter('git_wiki.repository.debug', $config['debug']);
+        if (!empty($configs['debug'])) {
+            $container->setParameter('git_wiki.repository.debug', $configs['debug']);
         }
-        if (!empty($config['executable'])) {
-            $configuration->setParameter('git_wiki.repository.executable', $config['executable']);
+        if (!empty($configs['executable'])) {
+            $container->setParameter('git_wiki.repository.executable', $configs['executable']);
         }
-        if (!empty($config['index'])) {
-            $configuration->setParameter('git_wiki.page.index', $config['index']);
+        if (!empty($configs['index'])) {
+            $container->setParameter('git_wiki.page.index', $configs['index']);
         }
     }
 
-    public function loadFilter($config, ContainerBuilder $configuration)
+    public function loadFilter($configs, ContainerBuilder $container)
     {
-        if(empty($config['filter'])) return;
+        if(empty($configs['filter'])) return;
 
-        $loader = new XmlFileLoader($configuration, new FileLocator(__DIR__.'/../Resources/config/filter'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/filter'));
 
-        foreach($config['filter'] as $name => $options) {
-            if(!$configuration->hasDefinition('git_wiki.filter.'.$name)) {
+        foreach($configs['filter'] as $name => $options) {
+            if(!$container->hasDefinition('git_wiki.filter.'.$name)) {
                 $loader->load($name.'.xml');
             }
             // @todo Load options.
@@ -83,7 +83,7 @@ class GitWikiExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'https://www.symfony-project.org/shemas/dic/symfony/git_wiki';
+        return '';
     }
 
     /**

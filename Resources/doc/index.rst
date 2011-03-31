@@ -12,7 +12,7 @@ Download source and dependencies:
 ::
 
     git submodule add git://github.com/GromNaN/GitWikiBundle.git src/Git/WikiBundle
-    git submodule add git://github.com/GromNaN/GitCore.git src/Git/Core
+    git submodule add git://github.com/GromNaN/GitCore.git vendor/gitwiki
 
 Enable the bundle in your application kernel.
 
@@ -34,11 +34,12 @@ Add Git lib in the autoload file:
 
 ::
 
-    # app/autoload.php - line 21
+    # app/autoload.php
 
     $loader->registerNamespaces(array(
         # ...
-        'Git' => __DIR__.'/../src',
+        'Git\\WikiBundle'  => __DIR__.'/../src',
+        'Git'              => __DIR__.'/../vendor/gitcore/src',
         # ...
     ));
 
@@ -91,9 +92,18 @@ Routing
 ::
 
     # app/config/routing.yml
-    wiki:
-        resource: @GitWikiBundle/Resources/config/routing.xml
+    _wiki:
+        resource: "@GitWiki/Resources/config/routing.xml"
         prefix:   /wiki
+
+Assets
+------
+
+Publish the assets using the following command :
+
+::
+
+    app/console assets:install --symlink web/
 
 
 Contribute
