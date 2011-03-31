@@ -29,15 +29,9 @@ class GitWikiExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('wiki.xml');
         $loader->load('git.xml');
-        $loader->load('views.xml');
         $loader->load('form.xml');
-
-        // Views
-        if (!empty($configs['views'])) {
-            foreach ($configs['views'] as $key => $value) {
-                $container->setParameter('git_wiki.views.'.$key, $value);
-            }
-        }
+        $loader->load('template.xml');
+        $loader->load('twig.xml');
 
         foreach($configs as $env_configs) {
             $this->loadConfig($env_configs, $container);

@@ -11,8 +11,8 @@
 
 namespace Git\WikiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Git\WikiBundle\Model\Edition;
 use Git\WikiBundle\Form\EditionForm;
@@ -36,11 +36,10 @@ class PageController extends Controller
      */
     public function viewAction($name, $commit = null)
     {
-        $page = $this->getPage($name);
+        $page = $this->getRepository()->getPage($name);
 
         if (!$page->exists()) {
-            return $this->redirect($this->get('router')->generate('git_wiki.page.edit', array('name' => $name)));
-            return $response;
+            return new RedirectResponse($this->getRoute('page.edit', array('name' => $name)));
         }
 
         if ($page->isDir()) {
@@ -51,10 +50,10 @@ class PageController extends Controller
             throw new NotFoundHttpException(sprintf('"%s" is not readable.', $name));
         }
 
-        $event = new Event($page, $this->container->getParameter('git_wiki.filter.event_name'), array('container' => $this->container));
+        $event = new Event($page, $this->container->getParameter(self::ALIAS . '.filter.event_name'), array('container' => $this->container));
         $contents = $this->get('event_dispatcher')->filter($event, $page->getContents());
 
-        return $this->renderView('view', array(
+        return $this->renderView('Page:view.html', array(
             'page' => $page,
             'contents' => $contents,
         ));
@@ -68,7 +67,7 @@ class PageController extends Controller
      */
     public function editAction($name)
     {
-        $page = $this->getPage($name);
+        $page = $this->getRepository()->getPage($name);
 
         if ($page->isDir()) {
             throw new NotFoundHttpException(sprintf('"%s" is a directory.', $name));
@@ -78,16 +77,16 @@ class PageController extends Controller
 //            throw new NotFoundHttpException(sprintf('"%s" is not writable.', $name));
 //        }
 
-        $form = $this->get('git_wiki.form.edition');
-        $form->bind($this->get('request'), new Edition($page));
+        $form = $this->container->get('git_wiki.form.edition');
+        $form->bind($this->getRequest(), new Edition($page));
 
         if ($form->isValid()) {
             $page->commit($form->getData()->getMessage(), $form->getData()->getAuthor());
 
-            return $this->redirect($this->get('router')->generate('git_wiki.page.view', array('name' => $name)));
+            return new RedirectResponse($this->getRoute('page.view', array('name' => $name)));
         }
 
-        return $this->renderView('edit', array(
+        return $this->renderView('Page:edit.html', array(
             'page' => $page,
             'form' => $form,
         ));
@@ -101,10 +100,10 @@ class PageController extends Controller
      */
     public function historyAction($name)
     {
-        $page = $this->getPage($name);
+        $page = $this->getRepository()->getPage($name);
         $commits = $page->log(10);
 
-        return $this->renderView('history', array(
+        return $this->renderView('Page:history.html', array(
             'page' => $page,
             'commits' => $commits,
         ));
@@ -121,10 +120,10 @@ class PageController extends Controller
      */
     public function compareAction($name, $hash1, $hash2 = null)
     {
-        $page = $this->getPage($name);
+        $page = $this->getRepository()->getPage($name);
         $diff = $page->diff(3, $hash1, $hash2);
 
-        return $this->renderView('compare', array(
+        return $this->renderView('Page:compare.html', array(
             'page' => $page,
             'diff' => $diff,
         ));
@@ -138,21 +137,21 @@ class PageController extends Controller
      */
     public function compareRedirectAction($name)
     {
-        if ('POST' === $this->get('request')->getMethod()) {
-
-            $hashes = $this->get('request')->get('hashes');
-
+        if ('POST' === $this->getRequest()->getMethod()) {
+            $hashes = $this->getRequest()->get('hashes');
             if (isset($hashes[0])) {
                 if (isset($hashes[1])) {
-                    return $this->redirect($this->getRoute('page.compare2', array('name' => $name, 'hash1' => $hashes[1], 'hash2' => $hashes[0])));
+                    $url = $this->getRoute('page.compare2', array('name' => $name, 'hash1' => $hashes[1], 'hash2' => $hashes[0]));
                 } else {
-                    return $this->redirect($this->getRoute('page.compare1', array('name' => $name, 'hash1' => $hashes[0])));
+                    $url = $this->getRoute('page.compare1', array('name' => $name, 'hash1' => $hashes[0]));
                 }
+            } else {
+                $url = $this->getRoute('page.history', array('name' => $name));
             }
         }
 
         // @todo Add flash message
-        return $this->redirect($this->getRoute('page.history', array('name' => $name)));
+        return new RedirectResponse($url);
     }
 
     /**
@@ -162,7 +161,7 @@ class PageController extends Controller
      */
     public function rawAction($name)
     {
-        $page = $this->getPage($name);
+        $page = $this->getRepository()->getPage($name);
 
         if ($page->isNew() || $page->isDir()) {
             throw new NotFoundHttpException(sprintf('File "%s" does not exist.', $name));
@@ -170,41 +169,4 @@ class PageController extends Controller
 
         return $this->createResponse($page->getContent());
     }
-
-    /**
-     * Renders a view.
-     *
-     * @param string   $view The view name
-     * @param array    $parameters An array of parameters to pass to the view
-     * @param Response $response A response instance
-     *
-     * @return Response A Response instance
-     */
-    public function renderView($view, array $parameters = array(), Response $response = null)
-    {
-        return $this->get('templating')->renderResponse(
-          $this->container->getParameter('git_wiki.views.page.'.$view), $parameters, $response);
-    }
-
-    /**
-     * Generate a route
-     *
-     * @param string $name
-     * @param array $parameters
-     * @return string
-     */
-    protected function getRoute($name, array $parameters = array())
-    {
-        return $this->container->get('router')->generate('git_wiki.'.$name, $parameters);
-    }
-
-    /**
-     * @return Git\WikiBundle\Model\Page
-     */
-    protected function getPage($name)
-    {
-        $name = urldecode($name); // Route escaper makes this parameter invalid.
-        return $this->container->get('git_wiki.repository')->getPage($name);
-    }
-
 }

@@ -11,8 +11,8 @@
 
 namespace Git\WikiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Git\WikiBundle\Model\Edition;
 use Git\WikiBundle\Form\EditForm;
 
@@ -32,8 +32,9 @@ class WikiController extends Controller
     public function indexAction()
     {
         $name = $this->container->getParameter('git_wiki.page.index');
-        $uri = $this->getRoute('page.view', array('name' => $name));
-        return $this->redirect($uri);
+        $url = $this->getRoute('page.view', array('name' => $name));
+        
+        return new RedirectResponse($url);
     }
 
     /**
@@ -44,7 +45,8 @@ class WikiController extends Controller
     public function pagesAction()
     {
         $pages = $this->getRepository()->getPages();
-        return $this->render($this->getView('pages'), array(
+        
+        return $this->renderView('Wiki:pages.html', array(
             'pages' => $pages,
         ));
     }
@@ -58,7 +60,7 @@ class WikiController extends Controller
     {
         $commits = $this->getRepository()->log(10);
 
-        return $this->render($this->getView('history'), array(
+        return $this->renderView('Wiki:history.html', array(
             'commits' => $commits
         ));
     }
@@ -74,7 +76,7 @@ class WikiController extends Controller
         $commit = $this->getRepository()->getCommit($hash);
         $diff = $commit->getRawDiff();
 
-        return $this->render($this->getView('commit'), array(
+        return $this->renderView('Wiki:commit.html', array(
             'commit' => $commit,
             'diff' => $diff
         ));
@@ -92,7 +94,7 @@ class WikiController extends Controller
     {
         $diff = $this->getRepository()->diff($hash1, $hash2, 3);
 
-        return $this->render($this->getView('compare'), array(
+        return $this->renderView('Wiki:compare.html', array(
             'diff' => $diff
         ));
     }
@@ -104,7 +106,7 @@ class WikiController extends Controller
      */
     public function compareRedirectAction()
     {
-        if ('POST' === $this->get('request')->getMethod()) {
+        if ('POST' === $this->container->get('request')->getMethod()) {
 
             $hashes = $this->get('request')->get('hashes');
 
@@ -117,7 +119,8 @@ class WikiController extends Controller
             }
         }
 
-        // @todo Add flash message
+        // @TODO Add flash message
+        
         return $this->redirect($this->getRoute('wiki.history'));
     }
 
@@ -129,38 +132,7 @@ class WikiController extends Controller
     public function searchAction()
     {
         // @TODO
-        return $this->render($this->getView('search'));
+        
+        return $this->renderView('Wiki:search.html');
     }
-
-    /**
-     * Get the configured view.
-     *
-     * @param  string  $name The view name
-     * @return  string  The view path name from DI parameters.
-     */
-    protected function getView($name)
-    {
-        return $this->container->getParameter('git_wiki.views.wiki.'.$name);
-    }
-
-    /**
-     * Generate a route
-     *
-     * @param string $name
-     * @param array $parameters
-     * @return string
-     */
-    protected function getRoute($name, array $parameters = array())
-    {
-        return $this->get('router')->generate('git_wiki.'.$name, $parameters);
-    }
-
-    /**
-     * @return Git\WikiBundle\Model\PageRepository
-     */
-    protected function getRepository()
-    {
-        return $this->container->get('git_wiki.repository');
-    }
-
 }
