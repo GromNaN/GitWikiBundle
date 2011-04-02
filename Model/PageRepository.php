@@ -36,15 +36,31 @@ class PageRepository extends Repository
     /**
      * Get the list of every pages in the repository.
      *
-     * @return Symfony\Component\Finder\Finder
+     * @return array
      */
     public function getPages()
     {
-        $finder = new Finder();
-        $finder->files();
-        $finder->in($this->getDir())
-          ->sortByName();
-        return $finder;
+        return $this->buildPagesTree($this->getDir());
     }
 
+    protected function buildPagesTree($dir)
+    {
+        $finder = new Finder();
+        $iterator = $finder
+            ->notName('.git*')
+            ->in($dir)
+            ->depth('0');
+
+        $pages = array();
+        foreach($iterator as $file)
+        {
+            if($file->isDir()) {
+                $pages[$file->getRelativePathName()] = $this->buildPagesTree($file->getPathName());
+            } else {
+                $pages[$file->getRelativePathName()] = new Page($this, $file->getPathName());
+            }
+        }
+
+        return $pages;
+    }
 }

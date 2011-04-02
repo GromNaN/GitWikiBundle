@@ -50,12 +50,9 @@ class PageController extends Controller
             throw new NotFoundHttpException(sprintf('"%s" is not readable.', $name));
         }
 
-        $event = new Event($page, $this->container->getParameter(self::ALIAS . '.filter.event_name'), array('container' => $this->container));
-        $contents = $this->get('event_dispatcher')->filter($event, $page->getContents());
-
         return $this->renderView('Page:view.html', array(
             'page' => $page,
-            'contents' => $contents,
+            'contents' => $page->getContents(),
         ));
     }
 
