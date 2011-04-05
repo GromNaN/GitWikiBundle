@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Git\WikiBundle\Model\Edition;
 use Git\WikiBundle\Form\EditionForm;
+use Git\WikiBundle\Events;
+use Git\WikiBundle\Event\RenderPageEvent;
 
 /**
  * Wiki pages related controller.
@@ -49,10 +51,13 @@ class PageController extends Controller
         if (!$page->isReadable()) {
             throw new NotFoundHttpException(sprintf('"%s" is not readable.', $name));
         }
+        
+        $event = new RenderPageEvent($page);
+        $this->container->get('event_dispatcher')->dispatch(Events::onGitWikiRenderPage, $event);
 
         return $this->renderView('Page:view.html', array(
             'page' => $page,
-            'contents' => $page->getContents(),
+            'contents' => $event->getContents(),
         ));
     }
 

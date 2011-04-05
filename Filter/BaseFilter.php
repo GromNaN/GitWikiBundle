@@ -11,7 +11,7 @@
 
 namespace Git\WikiBundle\Filter;
 
-use Symfony\Component\EventDispatcher\Event;
+use Git\WikiBundle\Event\RenderPageEvent;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
@@ -45,14 +45,12 @@ abstract class BaseFilter extends ContainerAware
      * @param string $contents
      * @return string
      */
-    public function filter(Event $event, $contents)
+    public function onGitWikiRenderPage(RenderPageEvent $event)
     {
-        $extension = $event->getSubject()->getExtension();
+        $extension = $event->getPage()->getExtension();
 
-        if (null === $this->extensions || in_array($extension, $this->extensions)) {
-            return $this->doFilter($contents);
-        } else {
-            return $contents;
+        if (!$this->extensions || in_array($extension, $this->extensions)) {
+            $event->setContents($this->doFilter($event->getContents()));
         }
     }
 

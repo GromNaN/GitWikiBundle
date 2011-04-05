@@ -4,22 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <parameters>
-        <parameter key="git_wiki.views.wiki.pages">GitWiki:Wiki:pages.html.php</parameter>
-        <parameter key="git_wiki.views.wiki.history">GitWiki:Wiki:history.html.php</parameter>
-        <parameter key="git_wiki.views.wiki.compare">GitWiki:Wiki:compare.html.php</parameter>
-        <parameter key="git_wiki.views.wiki.search">GitWiki:Wiki:search.html.php</parameter>
-        <parameter key="git_wiki.views.wiki.commit">GitWiki:Wiki:commit.html.php</parameter>
-
-        <parameter key="git_wiki.views.page.view">GitWiki:Page:view.html.php</parameter>
-        <parameter key="git_wiki.views.page.edit">GitWiki:Page:edit.html.php</parameter>
-        <parameter key="git_wiki.views.page.history">GitWiki:Page:history.html.php</parameter>
-        <parameter key="git_wiki.views.page.compare">GitWiki:Page:compare.html.php</parameter>
-
-        <parameter key="templating.helper.finder.class">Git\WikiBundle\Helper\FinderHelper</parameter>
-        <parameter key="templating.helper.git.class">Git\WikiBundle\Helper\GitHelper</parameter>
-    </parameters>
-
     <services>
         <service id="templating.helper.finder" class="%templating.helper.finder.class%">
             <tag name="templating.helper" alias="finder" />

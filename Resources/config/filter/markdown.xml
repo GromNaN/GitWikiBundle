@@ -5,11 +5,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="git_wiki.filter.raw_text" class="Git\WikiBundle\Filter\RawTextFilter">
+        <service id="kernel.listener.git_wiki_markdown" class="Git\WikiBundle\Filter\MarkdownFilter">
+            <tag name="kernel.listener" event="onGitWikiRenderPage" />
+            <call method="setExtensions">
+                <argument type="collection">
+                    <argument>md</argument>
+                    <argument>markdown</argument>
+                </argument>
+            </call>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
-            <tag name="kernel.listener" event="%git_wiki.filter.event_name%" method="filter" priority="0" />
         </service>
     </services>
 
